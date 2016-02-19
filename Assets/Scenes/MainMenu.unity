@@ -1861,6 +1861,21 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 361951741}
+--- !u!1 &385496951 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 126362, guid: fc1ab99d3dc953949ab933c5c773a303, type: 2}
+  m_PrefabInternal: {fileID: 751936114}
+--- !u!114 &385496953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 385496951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f943572a282614d598cb3435a85f1b94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &404563605
 GameObject:
   m_ObjectHideFlags: 0
@@ -2940,7 +2955,11 @@ Prefab:
       propertyPath: inputConfigurations.Array.data[1].isExpanded
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11413448, guid: fc1ab99d3dc953949ab933c5c773a303, type: 2}
+    - {fileID: 11493406, guid: fc1ab99d3dc953949ab933c5c773a303, type: 2}
+    - {fileID: 11414676, guid: fc1ab99d3dc953949ab933c5c773a303, type: 2}
+    - {fileID: 11467964, guid: fc1ab99d3dc953949ab933c5c773a303, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: fc1ab99d3dc953949ab933c5c773a303, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &754072677
@@ -8086,8 +8105,8 @@ MonoBehaviour:
   m_Script: {fileID: 1077351063, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: joy_0_axis_0
-  m_VerticalAxis: joy_0_axis_1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10

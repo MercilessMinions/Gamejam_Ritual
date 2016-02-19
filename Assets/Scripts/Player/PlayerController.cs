@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using TeamUtility.IO;
 using Assets.Scripts.Level;
 
 namespace Assets.Scripts.Player
@@ -35,8 +34,8 @@ namespace Assets.Scripts.Player
             }
             if (Active)
             {
-                float hor = InputManager.GetAxis("Horizontal_P" + (int)id, id);
-                float vert = InputManager.GetAxis("Vertical_P" + (int)id, id);
+				float hor = ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, this.id);
+				float vert = ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, this.id);
 
                 if (hor > 0)
                 {
@@ -87,20 +86,20 @@ namespace Assets.Scripts.Player
 
                 if (hor == 0 && vert == 0) anim.SetFloat("Speed", 0);
 
-                if (InputManager.GetButtonDown("LB_P" + (int)id, id) && !heldObject)
+				if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.LeftBumper, id) && !heldObject)
                 {
                     movement.InitRoll(-1);
                     anim.SetBool("Rolling", true);
 					SFXManager.instance.source.PlayOneShot(SFXManager.instance.roll);
                 }
-                if (InputManager.GetButtonDown("RB_P" + (int)id, id) && !heldObject)
+				if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.RightBumper, id) && !heldObject)
                 {
                     movement.InitRoll(1);
                     anim.SetBool("Rolling", true);
 					SFXManager.instance.source.PlayOneShot(SFXManager.instance.roll);
                 }
 
-                if (InputManager.GetAxis("RightTrigger_P" + (int)id, id) <= 0)
+				if (ControllerManager.instance.GetTrigger(ControllerInputWrapper.Triggers.RightTrigger,this.id) <= 0)
                 {
                     if (pickedUpThisTurn)
                         pickedUpThisTurn = false;
@@ -108,7 +107,7 @@ namespace Assets.Scripts.Player
                         ThrowObject();
                 }
 
-                if (InputManager.GetButton("Action_P" + (int)id, id))
+				if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, id))
                 {
                     anim.SetBool("Attack", true);
                 }
@@ -136,8 +135,8 @@ namespace Assets.Scripts.Player
         void OnTriggerStay2D(Collider2D col)
         {
             if (heldObject || movement.Rolling || !active) return;
-            if (InputManager.GetButton("Action_P" + (int)id, id)) return;
-            if (InputManager.GetAxis("RightTrigger_P" + (int)id, id) > 0)
+			if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, id)) return;
+			if (ControllerManager.instance.GetTrigger(ControllerInputWrapper.Triggers.RightTrigger,this.id) > 0)
             {
                 heldObject = col.GetComponent<SpriteObject>();
                 if (heldObject)

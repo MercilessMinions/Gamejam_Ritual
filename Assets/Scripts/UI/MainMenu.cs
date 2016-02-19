@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using TeamUtility.IO;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Assets.Scripts.Data;
@@ -87,7 +86,7 @@ public class MainMenu : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(((player1Ready == player1Joined) && (player2Joined == player2Ready) && (player3Joined == player3Ready) && (player4Joined == player4Ready))
-            && !(!(player1Ready) && !(player2Ready) && !(player3Ready) && !(player4Ready))) {
+			&& player2Ready) {
 			transform.GetChild(2).GetChild(6).GetComponent<CanvasGroup>().alpha += Time.deltaTime;
 			if(gameCountDownTimer <= 0) {
 
@@ -120,30 +119,35 @@ public class MainMenu : MonoBehaviour {
 			transform.GetChild(2).GetChild(6).GetComponent<CanvasGroup>().alpha -= Time.deltaTime;
 		}
 		navTimer -= Time.deltaTime;
-		if(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("SplashLoop")
-			&& Input.anyKeyDown) {
-			GetComponent<Animator>().SetTrigger("SplashToMainMenu");
+		if(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("SplashLoop")) {
+			ControllerManager.instance.AddPlayer(ControllerInputWrapper.Buttons.Start);
+			if(ControllerManager.instance.NumPlayers > 0) {
+				GetComponent<Animator>().SetTrigger("SplashToMainMenu");
+			}
 		}
+
+		//Player joining screen
 		if(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("MainMenuToPlayerJoin")
 			&& !GetComponent<Animator>().IsInTransition(0)) {
+			ControllerManager.instance.AddPlayer(ControllerInputWrapper.Buttons.A);
+			ControllerManager.instance.AllowPlayerRemoval(ControllerInputWrapper.Buttons.B);
+
 			//Player 1 CharacterSelection + Readying
 			if(player1Joined) {
 				player1JoiningBox.transform.FindChild("P1_Press_A_Text").GetComponent<CanvasGroup>().alpha -= Time.deltaTime;
 				player1JoiningBox.transform.GetChild(1).GetComponent<CanvasGroup>().alpha += Time.deltaTime;
-				if(InputManager.GetButtonDown("Action_P1", PlayerID.One) && !player1Ready && IsCharacterAvailable(PlayerID.One)) {
+				if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, PlayerID.One) && !player1Ready && IsCharacterAvailable(PlayerID.One)) {
 					player1Ready = true;
-				} else if(InputManager.GetButtonDown("B_P1", PlayerID.One) && player1Ready) {
+				} else if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.B, PlayerID.One) && player1Ready) {
 					player1Ready = false;
 				}
 				if(!player1Ready) {
-					if((InputManager.GetAxis("DPADHorizontal_P1", PlayerID.One) > 0
-						|| InputManager.GetButton("DPADRight_P1", PlayerID.One)) && navTimer < 0) {
+					if(ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.One) > 0 && navTimer < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer = 0.2f;
 						player1CharacterImage.sprite = charSprites[Mathf.Abs(++player1SelectedCharacter%4)];
 						player1CharacterName.text = charNames[Mathf.Abs(player1SelectedCharacter%4)];
-					} else if((InputManager.GetAxis("DPADHorizontal_P1", PlayerID.One) < 0
-						|| InputManager.GetButton("DPADLeft_P1", PlayerID.One)) && navTimer < 0) {
+					} else if(ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.One) < 0 && navTimer < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer = 0.2f;
 						player1CharacterImage.sprite = charSprites[Mathf.Abs(--player1SelectedCharacter%4)];
@@ -163,12 +167,12 @@ public class MainMenu : MonoBehaviour {
 			}
 
 			//Player 1 joining
-			if(InputManager.GetButtonDown("Action_P1", PlayerID.One) && !player1Joined) {
+			if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, PlayerID.One) && !player1Joined) {
 				player1Joined = true;
 			}
-			if (InputManager.GetButtonDown("B_P1", PlayerID.One) && player1Joined) {
+			if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.B, PlayerID.One) && player1Joined) {
 				player1Joined = false;
-			} else if (InputManager.GetButtonDown("B_P1", PlayerID.One)) { //Only Player 1 is allowed to go back
+			} else if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.B, PlayerID.One)) { //Only Player 1 is allowed to go back
 				ExecuteEvents.Execute(playerJoiningBackButton, new PointerEventData(EventSystem.current), ExecuteEvents.submitHandler);
 			}
 
@@ -176,20 +180,18 @@ public class MainMenu : MonoBehaviour {
 			if(player2Joined) {
 				player2JoiningBox.transform.FindChild("P2_Press_A_Text").GetComponent<CanvasGroup>().alpha -= Time.deltaTime;
 				player2JoiningBox.transform.GetChild(1).GetComponent<CanvasGroup>().alpha += Time.deltaTime;
-				if(InputManager.GetButtonDown("Action_P2", PlayerID.One) && !player2Ready && IsCharacterAvailable(PlayerID.Two)) {
+				if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, PlayerID.Two) && !player2Ready && IsCharacterAvailable(PlayerID.Two)) {
 					player2Ready = true;
-				} else if(InputManager.GetButtonDown("B_P2", PlayerID.Two) && player2Ready) {
+				} else if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.B, PlayerID.Two) && player2Ready) {
 					player2Ready = false;
 				}
 				if(!player2Ready) {
-					if((InputManager.GetAxis("DPADHorizontal_P2", PlayerID.Two) > 0
-						|| InputManager.GetButton("DPADRight_P2", PlayerID.Two)) && navTimer < 0) {
+					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Two) > 0) && navTimer < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer = 0.2f;
 						player2CharacterImage.sprite = charSprites[Mathf.Abs(++player2SelectedCharacter%4)];
 						player2CharacterName.text = charNames[Mathf.Abs(player2SelectedCharacter%4)];
-					} else if((InputManager.GetAxis("DPADHorizontal_P2", PlayerID.Two) < 0
-						|| InputManager.GetButton("DPADLeft_P2", PlayerID.Two)) && navTimer < 0) {
+					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Two) < 0) && navTimer < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer = 0.2f;
 						player2CharacterImage.sprite = charSprites[Mathf.Abs(--player2SelectedCharacter%4)];
@@ -209,10 +211,10 @@ public class MainMenu : MonoBehaviour {
 			}
 
 			//Player 2 joining
-			if(InputManager.GetButtonDown("Action_P2", PlayerID.Two) && !player2Joined) {
+			if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, PlayerID.Two) && !player2Joined) {
 				player2Joined = true;
 			}
-			if (InputManager.GetButtonDown("B_P2", PlayerID.Two) && player2Joined) {
+			if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.B, PlayerID.Two) && player2Joined) {
 				player2Joined = false;
 			}
 
@@ -220,20 +222,18 @@ public class MainMenu : MonoBehaviour {
 			if(player3Joined) {
 				player3JoiningBox.transform.FindChild("P3_Press_A_Text").GetComponent<CanvasGroup>().alpha -= Time.deltaTime;
 				player3JoiningBox.transform.GetChild(1).GetComponent<CanvasGroup>().alpha += Time.deltaTime;
-				if(InputManager.GetButtonDown("Action_P3", PlayerID.Three) && !player3Ready && IsCharacterAvailable(PlayerID.Three)) {
+				if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, PlayerID.Three) && !player3Ready && IsCharacterAvailable(PlayerID.Three)) {
 					player3Ready = true;
-				} else if(InputManager.GetButtonDown("B_P3", PlayerID.Three) && player3Ready) {
+				} else if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.B, PlayerID.Three) && player3Ready) {
 					player3Ready = false;
 				}
 				if(!player3Ready) {
-					if((InputManager.GetAxis("DPADHorizontal_P3", PlayerID.Three) > 0
-						|| InputManager.GetButton("DPADRight_P3", PlayerID.Three)) && navTimer < 0) {
+					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Three) > 0) && navTimer < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer = 0.2f;
 						player3CharacterImage.sprite = charSprites[Mathf.Abs(++player3SelectedCharacter%4)];
 						player3CharacterName.text = charNames[Mathf.Abs(player3SelectedCharacter%4)];
-					} else if((InputManager.GetAxis("DPADHorizontal_P3", PlayerID.Three) < 0
-						|| InputManager.GetButton("DPADLeft_P3", PlayerID.Three)) && navTimer < 0) {
+					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Three) < 0) && navTimer < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer = 0.2f;
 						player3CharacterImage.sprite = charSprites[Mathf.Abs(--player3SelectedCharacter%4)];
@@ -253,10 +253,10 @@ public class MainMenu : MonoBehaviour {
 			}
 
 			//Player 3 joining
-			if(InputManager.GetButtonDown("Action_P3", PlayerID.Three) && !player3Joined) {
+			if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, PlayerID.Three) && !player3Joined) {
 				player3Joined = true;
 			}
-			if (InputManager.GetButtonDown("B_P3", PlayerID.Three) && player3Joined) {
+			if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.B, PlayerID.Three) && player3Joined) {
 				player3Joined = false;
 			}
 
@@ -264,20 +264,18 @@ public class MainMenu : MonoBehaviour {
 			if(player4Joined) {
 				player4JoiningBox.transform.FindChild("P4_Press_A_Text").GetComponent<CanvasGroup>().alpha -= Time.deltaTime;
 				player4JoiningBox.transform.GetChild(1).GetComponent<CanvasGroup>().alpha += Time.deltaTime;
-				if(InputManager.GetButtonDown("Action_P4", PlayerID.Four) && !player4Ready && IsCharacterAvailable(PlayerID.Four)) {
+				if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, PlayerID.Four) && !player4Ready && IsCharacterAvailable(PlayerID.Four)) {
 					player4Ready = true;
-				} else if(InputManager.GetButtonDown("B_P4", PlayerID.Four) && player4Ready) {
+				} else if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.B, PlayerID.Four) && player4Ready) {
 					player4Ready = false;
 				}
 				if(!player4Ready) {
-					if((InputManager.GetAxis("DPADHorizontal_P4", PlayerID.Four) > 0
-						|| InputManager.GetButton("DPADRight_P4", PlayerID.Four)) && navTimer < 0) {
+					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Four) > 0) && navTimer < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer = 0.2f;
 						player4CharacterImage.sprite = charSprites[Mathf.Abs(++player4SelectedCharacter%4)];
 						player4CharacterName.text = charNames[Mathf.Abs(player4SelectedCharacter%4)];
-					} else if((InputManager.GetAxis("DPADHorizontal_P4", PlayerID.Four) < 0
-						|| InputManager.GetButton("DPADLeft_P4", PlayerID.Four)) && navTimer < 0) {
+					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Four) < 0) && navTimer < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer = 0.2f;
 						player4CharacterImage.sprite = charSprites[Mathf.Abs(--player4SelectedCharacter%4)];
@@ -297,22 +295,19 @@ public class MainMenu : MonoBehaviour {
 			}
 
 			//Player 4 joining
-			if(InputManager.GetButtonDown("Action_P4", PlayerID.Four) && !player4Joined) {
+			if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, PlayerID.Four) && !player4Joined) {
 				player4Joined = true;
 			}
-			if (InputManager.GetButtonDown("B_P4", PlayerID.Four) && player4Joined) {
+			if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.B, PlayerID.Four) && player4Joined) {
 				player4Joined = false;
 			}
 		} else {
-			if(InputManager.GetButton("Action_P1", PlayerID.One)) {
+			if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, PlayerID.One)) {
 				EventSystem cur = EventSystem.current;
 				GameObject curSelectedGameObject = EventSystem.current.currentSelectedGameObject;
 				ExecuteEvents.Execute(curSelectedGameObject, new PointerEventData(cur), ExecuteEvents.submitHandler);
 			}
-//			Debug.Log(InputManager.GetAxis("Vertical_P1", PlayerID.One));
-			if((InputManager.GetAxis("Vertical_P1", PlayerID.One) == 1f
-				|| InputManager.GetAxis("DPADVertical_P1", PlayerID.One) == 1f
-				|| InputManager.GetButtonDown("DPADUp_P1", PlayerID.One)) && navTimer < 0) {
+			if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) > 0f) && navTimer < 0) {
 				SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 				navTimer = 0.1f;
 				EventSystem cur = EventSystem.current;
@@ -322,9 +317,7 @@ public class MainMenu : MonoBehaviour {
 				if(up) {
 					cur.SetSelectedGameObject(up.gameObject);
 				}
-			} else if((InputManager.GetAxis("Vertical_P1", PlayerID.One) == -1f
-				|| InputManager.GetAxis("DPADVertical_P1", PlayerID.One) == -1f
-				|| InputManager.GetButtonDown("DPADDown_P1", PlayerID.One)) && navTimer < 0) {
+			} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) < 0) && navTimer < 0) {
 				SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 				navTimer = 0.1f;
 				EventSystem cur = EventSystem.current;
