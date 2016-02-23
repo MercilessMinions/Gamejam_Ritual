@@ -92,7 +92,7 @@ public class ControllerManager  {
         }
 //        joyNum--;
         string name = controllerNames[joyNum];
-
+		Debug.Log(name);
         //Debug.Log("Controllers connected: " + controllerNames.Length);
 
         if (name.Contains("Wireless"))
@@ -103,10 +103,14 @@ public class ControllerManager  {
         {
 			return new LogitechControllerWrapper(joyNum);
         }
-        else
+		else if (name.Contains("360"))
         {
-			return new XboxControllerWrapper(joyNum);
+			return new Xbox360ControllerWrapper(joyNum);
         }
+		else
+		{
+			return new XboxOneControllerWrapper(joyNum);
+		}
            
 
     }
