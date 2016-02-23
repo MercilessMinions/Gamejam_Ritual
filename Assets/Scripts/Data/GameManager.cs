@@ -32,6 +32,7 @@ namespace Assets.Scripts.Data
         private Minigame currentGame;
         [SerializeField]
         private List<Minigame> games;
+        private List<Minigame> gamesQueue;
 
         private int[] playerScores = new int[4];
 
@@ -74,6 +75,7 @@ namespace Assets.Scripts.Data
             respawnNodes = new List<RespawnNode>();
             characterToPlayer = new Dictionary<Enums.Characters, PlayerID>();
             goblets = new List<Goblet>();
+            gamesQueue = new List<Minigame>();
         }
 
         void OnLevelWasLoaded(int i)
@@ -108,7 +110,9 @@ namespace Assets.Scripts.Data
 
 			field = GameObject.Find("Field");
 
-            currentGame = games[Random.Range(0, games.Count)];
+            RefillGames();
+            currentGame = gamesQueue[0];
+            gamesQueue.RemoveAt(0);
 
             for (int i = 0; i < controllers.Count; i++)
             {
@@ -174,7 +178,9 @@ namespace Assets.Scripts.Data
 						}
 						demandingTimer = 5f;
 						transitionTimer2 = 15f;
-						currentGame = games[Random.Range(0, games.Count)];
+                        if (gamesQueue.Count == 0) RefillGames();
+						currentGame = gamesQueue[0];
+                        gamesQueue.RemoveAt(0);
 //						Debug.Log("Next game chosen: " + currentGame.name);
 					} else {
 						demandingTimer -= Time.deltaTime;
@@ -283,6 +289,18 @@ namespace Assets.Scripts.Data
             Controller removePlayer = controllers.Find(x => x.ID.Equals(characterToPlayer[character]));
             controllers.Remove(removePlayer);
             characterToPlayer.Remove(character);
+        }
+
+        private void RefillGames()
+        {
+            gamesQueue = games.ToList();
+            for (int i = gamesQueue.Count - 1; i >= 0; i--)
+            {
+                int j = Random.Range(0, gamesQueue.Count);
+                Minigame m = gamesQueue[i];
+                gamesQueue[i] = gamesQueue[j];
+                gamesQueue[j] = m;
+            }
         }
 
 #region C# Properties
