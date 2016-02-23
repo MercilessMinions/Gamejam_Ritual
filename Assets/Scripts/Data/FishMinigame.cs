@@ -44,24 +44,28 @@ namespace Assets.Scripts.Data
             if (GameManager.instance.CharacterToPlayer.ContainsKey(Util.Enums.Characters.Opochtli))
             {
                 Basket b = ((GameObject)Instantiate(baskets[0], new Vector2(-5, 1), Quaternion.identity)).GetComponent<Basket>();
+				b.RespawnAt(new Vector2(-5,1));
                 b.Character = Util.Enums.Characters.Opochtli;
                 inGameBaskets.Add(b);
             }
             if (GameManager.instance.CharacterToPlayer.ContainsKey(Util.Enums.Characters.Zolin))
             {
                 Basket b = ((GameObject)Instantiate(baskets[1], new Vector2(-5, -3), Quaternion.identity)).GetComponent<Basket>();
+				b.RespawnAt(new Vector2(-5,-3));
                 b.Character = Util.Enums.Characters.Zolin;
                 inGameBaskets.Add(b);
             }
             if (GameManager.instance.CharacterToPlayer.ContainsKey(Util.Enums.Characters.Yaotl))
             {
                 Basket b = ((GameObject)Instantiate(baskets[2], new Vector2(5, 1), Quaternion.identity)).GetComponent<Basket>();
+				b.RespawnAt(new Vector2(5,1));
                 b.Character = Util.Enums.Characters.Yaotl;
                 inGameBaskets.Add(b);
             }
             if (GameManager.instance.CharacterToPlayer.ContainsKey(Util.Enums.Characters.Coatl))
             {
                 Basket b = ((GameObject)Instantiate(baskets[3], new Vector2(5, -3), Quaternion.identity)).GetComponent<Basket>();
+				b.RespawnAt(new Vector2(5,-3));
                 b.Character = Util.Enums.Characters.Coatl;
                 inGameBaskets.Add(b);
             }
@@ -78,6 +82,13 @@ namespace Assets.Scripts.Data
         public override void Run()
         {
             //throw new NotImplementedException();
+//			foreach(Basket b in inGameBaskets) {
+//				if(b.HasFallenOffEdge()) {
+//					b.Active = true;
+//					b.transform.position = new Vector2(5,-3);
+//					b.ResetScale();
+//				}
+//			}
         }
 
         public void FishCaught(PlayerID id)

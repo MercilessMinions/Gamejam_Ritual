@@ -875,12 +875,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d253d604aa1d34b829116855e3f7ffe0, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &171289017 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11445774, guid: d253d604aa1d34b829116855e3f7ffe0,
-    type: 2}
-  m_PrefabInternal: {fileID: 171289016}
-  m_Script: {fileID: 11500000, guid: a3ffd317fd2f44226b06857e66ef7673, type: 3}
 --- !u!4 &171289018 stripped
 Transform:
   m_PrefabParentObject: {fileID: 486476, guid: d253d604aa1d34b829116855e3f7ffe0, type: 2}
@@ -3081,9 +3075,9 @@ MonoBehaviour:
   - {fileID: 121306, guid: bfb6ad30251f8460287b1d816fd6c6dd, type: 2}
   - {fileID: 170272, guid: 36ea5167cd60c446fbe3071dbe448800, type: 2}
   games:
-  - {fileID: 171289017}
-  - {fileID: 1478522032}
-  - {fileID: 887449237}
+  - {fileID: 2820377}
+  - {fileID: 2820377}
+  - {fileID: 2820377}
   - {fileID: 2820377}
   inGame: 0
   field: {fileID: 0}
@@ -3641,12 +3635,6 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
---- !u!114 &887449237 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11482038, guid: e64fbbf024086b44d8d73718389589bd,
-    type: 2}
-  m_PrefabInternal: {fileID: 1551324552}
-  m_Script: {fileID: 11500000, guid: 09b881423854aed44b82eeec6c1932c0, type: 3}
 --- !u!1 &892460785
 GameObject:
   m_ObjectHideFlags: 0

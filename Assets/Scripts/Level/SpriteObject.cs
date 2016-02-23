@@ -17,6 +17,8 @@ namespace Assets.Scripts.Level
         protected Transform sprite;
 
         private Vector3 initPosition;
+		private Vector3 initScale;
+		private Vector3 respawnPosition;
 
 		protected bool fallingOffEdge;
 
@@ -42,6 +44,7 @@ namespace Assets.Scripts.Level
         {
             UpdateSortingLayer();
             initPosition = sprite.localPosition;
+			initScale = transform.localScale;
         }
 
         public void Update()
@@ -51,15 +54,24 @@ namespace Assets.Scripts.Level
 				if(transform.localScale.x > 0) {
 					transform.localScale -= Vector3.one*Time.deltaTime;
 					transform.Rotate(new Vector3(0,0,Time.deltaTime*100f));
+				} else if (respawnPosition != null) {
+					transform.position = respawnPosition;
+					transform.localScale = initScale;
+					fallingOffEdge = false;
+					active = true;
+					transform.rotation = Quaternion.identity;
+					force = 0;
+					vertForce = 0;
+					GetComponent<SpriteRenderer>().enabled = true;
 				}
 			} else {
 	            heightOffGround = sprite.position.y - transform.position.y;
-	            if (heightOffGround > 0 && falling)
+				if (heightOffGround > 0.6f && falling)
 	            {
 	                active = false;
 	                Fall();
 	            }
-	            else if(falling && !active && heightOffGround <=0)
+				else if(falling && !active && heightOffGround <= 0.6f)
 	            {
 	                HitGround();
 	            }
@@ -78,6 +90,16 @@ namespace Assets.Scripts.Level
 		public virtual void FellOffEdge() {
 			fallingOffEdge = true;
 			active = false;
+		}
+
+		public bool HasFallenOffEdge() {
+			if(gameObject.name.Contains("Blue Basket"))
+				Debug.Log(transform.localScale.x);
+			return transform.localScale.x <= 0;
+		}
+
+		public void RespawnAt(Vector3 pos) {
+			respawnPosition = pos;
 		}
 
         protected virtual void HitGround()

@@ -21,7 +21,7 @@ namespace Assets.Scripts.Data
         }
         public override void Run()
         {
-            if (numAlive == 1)
+			if (numAlive == 1)
             {
                 for (int i = 0; i < GameManager.instance.AllPlayers.Count; i++)
                 {
@@ -30,6 +30,13 @@ namespace Assets.Scripts.Data
 					GameManager.instance.AllPlayers[i].MovementComponent.MeleeEnabled = false;
                 }
             }
+			if (numAlive == 0) {
+				finished = true;
+				for (int i = 0; i < GameManager.instance.AllPlayers.Count; i++)
+				{
+					GameManager.instance.AllPlayers[i].MovementComponent.MeleeEnabled = false;
+				}
+			}
             else
             {
                 int temp = 0;

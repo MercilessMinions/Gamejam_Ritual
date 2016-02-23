@@ -81,6 +81,12 @@ namespace Assets.Scripts.Player
            if(goInactive) gameObject.SetActive(false);
         }
 
+		public override void FellOffEdge ()
+		{
+			base.FellOffEdge ();
+			ThrowObject();
+		}
+
 
         /// <summary>
         /// Reenables the player
