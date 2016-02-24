@@ -5,8 +5,6 @@ namespace Assets.Scripts.Data
 {
     public class CaymanGame : Minigame
     {
-
-        //[]
         [SerializeField]
         private GameObject cayman;
 
@@ -29,7 +27,7 @@ namespace Assets.Scripts.Data
         public override void Run()
         {
 			if(!caymanTemp) {
-				caymanTemp = (GameObject) Instantiate(cayman, new Vector3(0, 0, 0), Quaternion.identity);
+				caymanTemp = (GameObject) Instantiate(cayman, new Vector3(0, -7, 0), Quaternion.identity);
 			} else {
 	            if (caymanTemp.GetComponent<Monster>().winners.Count <= 1)
 	            {

@@ -87,7 +87,7 @@ public class MainMenu : MonoBehaviour {
 	void Update () {
 		if(((player1Ready == player1Joined) && (player2Joined == player2Ready) && (player3Joined == player3Ready) && (player4Joined == player4Ready))
 			&& player2Ready) {
-			transform.GetChild(2).GetChild(6).GetComponent<CanvasGroup>().alpha += Time.deltaTime;
+			transform.GetChild(3).GetChild(6).GetComponent<CanvasGroup>().alpha += Time.deltaTime;
 			if(gameCountDownTimer <= 0) {
 
                 //TODO: GO TO GAME
@@ -110,13 +110,13 @@ public class MainMenu : MonoBehaviour {
                 SceneManager.LoadScene("Eric Test2");
             } else {
 				gameCountDownTimer -= Time.deltaTime;
-				transform.GetChild(2).GetChild(6).localScale = Vector3.one * (5-gameCountDownTimer)/2f;
-				transform.GetChild(2).GetChild(6).GetChild(1).GetComponent<Text>().text = countDown[(int)gameCountDownTimer];
+				transform.GetChild(3).GetChild(6).localScale = Vector3.one * (5-gameCountDownTimer)/2f;
+				transform.GetChild(3).GetChild(6).GetChild(1).GetComponent<Text>().text = countDown[(int)gameCountDownTimer];
 			}
 		} else {
 			gameCountDownTimer = 5;
-			transform.GetChild(2).GetChild(6).localScale = Vector3.one;
-			transform.GetChild(2).GetChild(6).GetComponent<CanvasGroup>().alpha -= Time.deltaTime;
+			transform.GetChild(3).GetChild(6).localScale = Vector3.one;
+			transform.GetChild(3).GetChild(6).GetComponent<CanvasGroup>().alpha -= Time.deltaTime;
 		}
 		navTimer -= Time.deltaTime;
 		if(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("SplashLoop")) {
@@ -130,7 +130,7 @@ public class MainMenu : MonoBehaviour {
 		if(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("MainMenuToPlayerJoin")
 			&& !GetComponent<Animator>().IsInTransition(0)) {
 			ControllerManager.instance.AddPlayer(ControllerInputWrapper.Buttons.A);
-			ControllerManager.instance.AllowPlayerRemoval(ControllerInputWrapper.Buttons.B);
+//			ControllerManager.instance.AllowPlayerRemoval(ControllerInputWrapper.Buttons.B);
 
 			//Player 1 CharacterSelection + Readying
 			if(player1Joined) {
@@ -302,16 +302,18 @@ public class MainMenu : MonoBehaviour {
 				player4Joined = false;
 			}
 		} else {
+			EventSystem cur = EventSystem.current;
+			GameObject curSelectedGameObject = cur.currentSelectedGameObject;
+			if(curSelectedGameObject == null) {
+				curSelectedGameObject = cur.firstSelectedGameObject;
+				cur.SetSelectedGameObject(curSelectedGameObject);
+			}
 			if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, PlayerID.One)) {
-				EventSystem cur = EventSystem.current;
-				GameObject curSelectedGameObject = EventSystem.current.currentSelectedGameObject;
 				ExecuteEvents.Execute(curSelectedGameObject, new PointerEventData(cur), ExecuteEvents.submitHandler);
 			}
 			if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) > 0f) && navTimer < 0) {
 				SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 				navTimer = 0.1f;
-				EventSystem cur = EventSystem.current;
-				GameObject curSelectedGameObject = EventSystem.current.currentSelectedGameObject;
 				Selectable sel = curSelectedGameObject.GetComponent<Selectable>();
 				Selectable up = sel.FindSelectableOnUp();
 				if(up) {
@@ -320,8 +322,6 @@ public class MainMenu : MonoBehaviour {
 			} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) < 0) && navTimer < 0) {
 				SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 				navTimer = 0.1f;
-				EventSystem cur = EventSystem.current;
-				GameObject curSelectedGameObject = EventSystem.current.currentSelectedGameObject;
 				Selectable sel = curSelectedGameObject.GetComponent<Selectable>();
 				Selectable down = sel.FindSelectableOnDown();
 				if(down) {

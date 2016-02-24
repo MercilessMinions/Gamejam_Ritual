@@ -41,9 +41,11 @@ public class Monster : MonoBehaviour {
         //rb.isKinematic = false;
        // rb.AddForce(new Vector2(flyAwayForceX, flyAwayForceY));
         Controller deadPlayer = players.Find(x => x.ID.Equals(col.GetComponent<Controller>().ID));
-        winners.Remove(deadPlayer.ID);
-        losers.Add(deadPlayer.ID);
-        deadPlayer.GetComponent<Life>().ModifyHealth(-100);
+		if(!deadPlayer.LifeComponent.IsInvincible) {
+	        winners.Remove(deadPlayer.ID);
+	        losers.Add(deadPlayer.ID);
+	        deadPlayer.GetComponent<Life>().ModifyHealth(-100);
+		}
 
     }
 

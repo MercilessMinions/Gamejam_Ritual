@@ -92,7 +92,6 @@ public class ControllerManager  {
         }
 //        joyNum--;
         string name = controllerNames[joyNum];
-		Debug.Log(name);
         //Debug.Log("Controllers connected: " + controllerNames.Length);
 
         if (name.Contains("Wireless"))

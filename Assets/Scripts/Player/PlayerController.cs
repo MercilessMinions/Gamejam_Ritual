@@ -12,7 +12,7 @@ namespace Assets.Scripts.Player
         private bool pickedUpThisTurn;
 		private float walkSoundTimer;
 
-        new void Update()
+		protected override void Update()
         {
             base.Update();
 			if (fallingOffEdge) {

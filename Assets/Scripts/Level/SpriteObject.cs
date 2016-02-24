@@ -47,7 +47,7 @@ namespace Assets.Scripts.Level
 			initScale = transform.localScale;
         }
 
-        public void Update()
+		protected virtual void Update()
         {
 			if(fallingOffEdge) {
 				GetComponent<SpriteRenderer>().enabled = false;

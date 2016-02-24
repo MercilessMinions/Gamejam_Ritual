@@ -41,6 +41,18 @@ namespace Assets.Scripts.Player
             base.Init();
         }
 
+		protected override void Update() {
+			base.Update();
+			if(this.id == PlayerID.One) {
+				Debug.Log(life.IsInvincible);
+			}
+			if(life.IsInvincible) {
+				base.sprite.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.5f);
+			} else {
+				base.sprite.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
+			}
+		}
+
         /// <summary>
         /// Assigning references
         /// </summary>

@@ -16,6 +16,8 @@ namespace Assets.Scripts.Player
 
         private float health = MAX_HEALTH;
 
+		private float respawnInvincibility;
+
         [SerializeField]
         private GameObject hitEffect;
 
@@ -47,6 +49,12 @@ namespace Assets.Scripts.Player
             controller.Disable(false);
         }
 
+		public bool IsInvincible {
+			get {
+				return respawnInvincibility > 0;
+			}
+		}
+
         /// <summary>
         /// Respawns the player and clears all previous effects
         /// </summary>
@@ -54,7 +62,14 @@ namespace Assets.Scripts.Player
         {
             //if(restoreHealth) health = MAX_HEALTH;
             controller.Enable();
+			respawnInvincibility = 1f;
         }
+
+		void Update() {
+			if(respawnInvincibility > 0) {
+				respawnInvincibility -= Time.deltaTime;
+			}
+		}
 
 
         #region C# Properties
