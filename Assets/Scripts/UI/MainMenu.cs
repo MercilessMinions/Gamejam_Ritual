@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour {
 	public static GameObject player1Char, player2Char, player3Char, player4Char;
 	public GameObject char1Prefab, char2Prefab, char3Prefab, char4Prefab;
 
-	private float navTimer;
+	private float navTimer, navTimer2, navTimer3, navTimer4;
 
 	// Use this for initialization
 	void Start () {
@@ -119,6 +119,9 @@ public class MainMenu : MonoBehaviour {
 			transform.GetChild(3).GetChild(6).GetComponent<CanvasGroup>().alpha -= Time.deltaTime;
 		}
 		navTimer -= Time.deltaTime;
+		navTimer2 -= Time.deltaTime;
+		navTimer3 -= Time.deltaTime;
+		navTimer4 -= Time.deltaTime;
 		if(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("SplashLoop")) {
 			ControllerManager.instance.AddPlayer(ControllerInputWrapper.Buttons.Start);
 			if(ControllerManager.instance.NumPlayers > 0) {
@@ -142,16 +145,21 @@ public class MainMenu : MonoBehaviour {
 					player1Ready = false;
 				}
 				if(!player1Ready) {
-					if(ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.One) > 0 && navTimer < 0) {
+					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.One) > 0
+						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.One) > 0) && navTimer < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer = 0.2f;
 						player1CharacterImage.sprite = charSprites[Mathf.Abs(++player1SelectedCharacter%4)];
 						player1CharacterName.text = charNames[Mathf.Abs(player1SelectedCharacter%4)];
-					} else if(ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.One) < 0 && navTimer < 0) {
+					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.One) < 0
+						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.One) < 0) && navTimer < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer = 0.2f;
 						player1CharacterImage.sprite = charSprites[Mathf.Abs(--player1SelectedCharacter%4)];
 						player1CharacterName.text = charNames[Mathf.Abs(player1SelectedCharacter%4)];
+					} else if (ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.One) == 0
+						&& ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.One) == 0) {
+						navTimer = 0f;
 					}
 				}
 			} else {
@@ -186,16 +194,21 @@ public class MainMenu : MonoBehaviour {
 					player2Ready = false;
 				}
 				if(!player2Ready) {
-					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Two) > 0) && navTimer < 0) {
+					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Two) > 0
+						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Two) > 0) && navTimer2 < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
-						navTimer = 0.2f;
+						navTimer2 = 0.2f;
 						player2CharacterImage.sprite = charSprites[Mathf.Abs(++player2SelectedCharacter%4)];
 						player2CharacterName.text = charNames[Mathf.Abs(player2SelectedCharacter%4)];
-					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Two) < 0) && navTimer < 0) {
+					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Two) < 0
+						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Two) < 0) && navTimer2 < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
-						navTimer = 0.2f;
+						navTimer2 = 0.2f;
 						player2CharacterImage.sprite = charSprites[Mathf.Abs(--player2SelectedCharacter%4)];
 						player2CharacterName.text = charNames[Mathf.Abs(player2SelectedCharacter%4)];
+					} else if (ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Two) == 0
+						&& ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Two) == 0) {
+						navTimer2 = 0f;
 					}
 				}
 			} else {
@@ -228,16 +241,21 @@ public class MainMenu : MonoBehaviour {
 					player3Ready = false;
 				}
 				if(!player3Ready) {
-					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Three) > 0) && navTimer < 0) {
+					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Three) > 0
+						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Three) > 0) && navTimer3 < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
-						navTimer = 0.2f;
+						navTimer3 = 0.2f;
 						player3CharacterImage.sprite = charSprites[Mathf.Abs(++player3SelectedCharacter%4)];
 						player3CharacterName.text = charNames[Mathf.Abs(player3SelectedCharacter%4)];
-					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Three) < 0) && navTimer < 0) {
+					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Three) < 0
+						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Three) < 0) && navTimer3 < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
-						navTimer = 0.2f;
+						navTimer3 = 0.2f;
 						player3CharacterImage.sprite = charSprites[Mathf.Abs(--player3SelectedCharacter%4)];
 						player3CharacterName.text = charNames[Mathf.Abs(player3SelectedCharacter%4)];
+					} else if (ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Three) == 0
+						&& ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Three) == 0) {
+						navTimer3 = 0f;
 					}
 				}
 			} else {
@@ -270,16 +288,21 @@ public class MainMenu : MonoBehaviour {
 					player4Ready = false;
 				}
 				if(!player4Ready) {
-					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Four) > 0) && navTimer < 0) {
+					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Four) > 0
+						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Four) > 0) && navTimer4 < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
-						navTimer = 0.2f;
+						navTimer4 = 0.2f;
 						player4CharacterImage.sprite = charSprites[Mathf.Abs(++player4SelectedCharacter%4)];
 						player4CharacterName.text = charNames[Mathf.Abs(player4SelectedCharacter%4)];
-					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Four) < 0) && navTimer < 0) {
+					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Four) < 0
+						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Four) < 0) && navTimer4 < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
-						navTimer = 0.2f;
+						navTimer4 = 0.2f;
 						player4CharacterImage.sprite = charSprites[Mathf.Abs(--player4SelectedCharacter%4)];
 						player4CharacterName.text = charNames[Mathf.Abs(player4SelectedCharacter%4)];
+					} else if (ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Four) == 0
+						&& ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Four) == 0) {
+						navTimer4 = 0f;
 					}
 				}
 			} else {
@@ -311,22 +334,27 @@ public class MainMenu : MonoBehaviour {
 			if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, PlayerID.One)) {
 				ExecuteEvents.Execute(curSelectedGameObject, new PointerEventData(cur), ExecuteEvents.submitHandler);
 			}
-			if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) > 0f) && navTimer < 0) {
+			if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) > 0f
+				|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, PlayerID.One) > 0f) && navTimer < 0) {
 				SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
-				navTimer = 0.1f;
+				navTimer = 0.3f;
 				Selectable sel = curSelectedGameObject.GetComponent<Selectable>();
 				Selectable up = sel.FindSelectableOnUp();
 				if(up) {
 					cur.SetSelectedGameObject(up.gameObject);
 				}
-			} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) < 0) && navTimer < 0) {
+			} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) < 0f
+				|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, PlayerID.One) < 0f) && navTimer < 0) {
 				SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
-				navTimer = 0.1f;
+				navTimer = 0.3f;
 				Selectable sel = curSelectedGameObject.GetComponent<Selectable>();
 				Selectable down = sel.FindSelectableOnDown();
 				if(down) {
 					cur.SetSelectedGameObject(down.gameObject);
 				}
+			} else if (ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) == 0f
+				&& ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, PlayerID.One) == 0f){
+				navTimer = 0f;
 			}
 		}
 	}
