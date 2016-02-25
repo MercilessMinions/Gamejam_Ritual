@@ -65,7 +65,7 @@ namespace Assets.Scripts.Timers
         {
             if (on)
             {
-                timer += Time.deltaTime;
+                timer += Data.GameManager.instance.DeltaTime;
                 if (timer >= interval)
                 {
                     // If the event has subscribers, fire it

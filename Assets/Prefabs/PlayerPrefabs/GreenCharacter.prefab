@@ -63,6 +63,7 @@ GameObject:
   - 4: {fileID: 412420}
   - 212: {fileID: 21241920}
   - 95: {fileID: 9529780}
+  - 114: {fileID: 11485982}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -196,7 +197,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 412420}
   id: 2
+  character: 0
   holdPoint: {fileID: 426202}
+  heldObject: {fileID: 0}
 --- !u!114 &11445058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -231,6 +234,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 199610, guid: b1fb58d52801563499acd2dc2b9894bc, type: 2}
+--- !u!114 &11485982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec803f99e71c1a4185451d2e1eb310f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21241920
 SpriteRenderer:
   m_ObjectHideFlags: 1

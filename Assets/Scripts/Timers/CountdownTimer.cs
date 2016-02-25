@@ -35,7 +35,7 @@ namespace Assets.Scripts.Timers
         {
             if (on)
             {
-                timer -= Time.deltaTime;
+                timer -= Data.GameManager.instance.DeltaTime;
                 if (timer <= 0)
                 {
                     timer = 0;

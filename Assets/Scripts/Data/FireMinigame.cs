@@ -65,7 +65,7 @@ namespace Assets.Scripts.Data
 			}
 
 			if(numDead == GameManager.instance.AllPlayers.Count - 1) {
-				winnerFound -= Time.deltaTime;
+				winnerFound -= Data.GameManager.instance.DeltaTime;
 				if(winnerFound < 0) {
 					for(int i = 0; i < GameManager.instance.AllPlayers.Count; i++) {
 						GameManager.instance.AllPlayers[i].ThrowObject();

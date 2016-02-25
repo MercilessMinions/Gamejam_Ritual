@@ -63,8 +63,8 @@ namespace Assets.Scripts.Level
 			if(fallingOffEdge) {
 				GetComponent<SpriteRenderer>().enabled = false;
 				if(transform.localScale.x > 0) {
-					transform.localScale -= Vector3.one*Time.deltaTime;
-					transform.Rotate(new Vector3(0,0,Time.deltaTime*100f));
+					transform.localScale -= Vector3.one*Data.GameManager.instance.DeltaTime;
+					transform.Rotate(new Vector3(0,0,Data.GameManager.instance.DeltaTime*100f));
 				} else if (respawnPosition != null) {
 					RespawnReset();
 				}
@@ -91,18 +91,14 @@ namespace Assets.Scripts.Level
 			active = true;
 			falling = true;
 			transform.rotation = Quaternion.identity;
-//			force = 0;
-//			vertForce = 0;
 			GetComponent<SpriteRenderer>().enabled = true;
 		}
 
         protected void Fall()
         {
-            sprite.transform.Translate(-Vector2.up * 5f * Time.deltaTime, Space.World);
-                //vertForce = Mathf.SmoothDamp(vertForce, 5f, ref vertVel, 0.1f);
-                //sprite.transform.Translate(-Vector2.up * vertForce * Time.deltaTime, Space.World);
-            force = Mathf.SmoothDamp(force, 0f, ref throwVel, 0.1f);
-            transform.Translate(Vector2.right * force * Time.deltaTime, Space.World);
+            sprite.transform.Translate(-Vector2.up * 5f * Data.GameManager.instance.DeltaTime, Space.World);
+            if(!Data.GameManager.instance.paused) force = Mathf.SmoothDamp(force, 0f, ref throwVel, 0.1f);
+            transform.Translate(Vector2.right * force * Data.GameManager.instance.DeltaTime, Space.World);
         }
 
 		public virtual void FellOffEdge() {

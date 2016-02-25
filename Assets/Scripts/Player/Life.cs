@@ -67,7 +67,7 @@ namespace Assets.Scripts.Player
 
 		void Update() {
 			if(respawnInvincibility > 0) {
-				respawnInvincibility -= Time.deltaTime;
+				respawnInvincibility -= Data.GameManager.instance.DeltaTime;
 			}
 		}
 

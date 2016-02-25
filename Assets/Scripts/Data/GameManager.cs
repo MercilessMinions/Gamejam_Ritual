@@ -17,6 +17,20 @@ namespace Assets.Scripts.Data
     public class GameManager : MonoBehaviour
     {
         /// <summary>
+        /// Delegate event
+        /// </summary>
+        /// <param name="t"></param>
+        public delegate void PausingEvent();
+        /// <summary>
+        /// The event for pausing
+        /// </summary>
+        public static event PausingEvent Pause;
+        /// <summary>
+        /// The event for unpausing
+        /// </summary>
+        public static event PausingEvent Unpause;
+
+        /// <summary>
         /// Use a singleton instance to make sure there is only one
         /// </summary>
         public static GameManager instance;
@@ -43,7 +57,10 @@ namespace Assets.Scripts.Data
 		private bool scoreAdded = false;
 		private float demandingTimer = 1f, transitionTimer2 = 0f;
 
+        public float DeltaTime = 0;
+
         public bool inGame = false;
+        public bool paused = false;
 
         public GameObject field;
 
@@ -56,7 +73,6 @@ namespace Assets.Scripts.Data
 
 		private float veryFirstTimer = 4f;
 		
-
         private Dictionary<Enums.Characters, PlayerID> characterToPlayer;
 
         // Sets up singleton instance. Will remain if one does not already exist in scene
@@ -86,13 +102,6 @@ namespace Assets.Scripts.Data
         public void StartGame()
         {
             inGame = true;
-            /*
-            Controller[] findControllers = FindObjectsOfType<Controller>();
-            for (int i = 0; i < findControllers.Length; i++)
-            {
-                controllers.Add(findControllers[i]);
-            }
-            */
 
             RespawnNode[] findNodes = FindObjectsOfType<RespawnNode>();
             for (int i = 0; i < findNodes.Length; i++)
@@ -159,9 +168,26 @@ namespace Assets.Scripts.Data
         {
             if (inGame)
             {
-				if (!currentGame.finished && !transitionStarted)
+                if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.Start, PlayerID.One))
                 {
-					veryFirstTimer -= Time.deltaTime;
+                    if (!paused)
+                    {
+                        paused = true;
+                        if (Pause != null) Pause();
+                    }
+                    else
+                    {
+                        paused = false;
+                        if (Unpause != null) Unpause();
+                    }
+                }
+
+                if (paused) DeltaTime = 0;
+                else DeltaTime = Time.deltaTime;
+
+                if (!currentGame.finished && !transitionStarted)
+                {
+					veryFirstTimer -= DeltaTime;
 					if(veryFirstTimer <= 0) {
                     	currentGame.Run();
 					}
@@ -183,7 +209,7 @@ namespace Assets.Scripts.Data
 						currentGame = gamesQueue[0];
                         gamesQueue.RemoveAt(0);
 					} else {
-						demandingTimer -= Time.deltaTime;
+						demandingTimer -= DeltaTime;
 
 						if(demandingTimer <= 0) {
 							transitionTimer2 = 5f;
@@ -193,7 +219,7 @@ namespace Assets.Scripts.Data
 							dialogHolder.GetComponent<SpriteRenderer>().sprite = currentGame.instructions;
 						}
 
-						transitionTimer2 -= Time.deltaTime;
+						transitionTimer2 -= DeltaTime;
 
 						if(transitionTimer2 <= 0) {
 							currentGame.Init();
@@ -203,7 +229,7 @@ namespace Assets.Scripts.Data
                 }
 				dialogHolder.transform.localScale = Vector3.one*Mathf.Max(1.5f,(Mathf.Sin(Time.time*8f)+1));
 			} else if(gameWon) {
-				winTimer -= Time.deltaTime;
+				winTimer -= DeltaTime;
 				if(winTimer <= 0) {
 					gameWon = false;
 					Camera.main.GetComponent<Animator>().SetTrigger("GameEnd");

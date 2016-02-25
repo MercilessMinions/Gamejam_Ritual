@@ -26,7 +26,7 @@ namespace Assets.Scripts.Player
                 controller.Anim.SetBool("Club", meleeEnabled);
                 if (rolling)
                 {
-                    rollTimer += Time.deltaTime;
+                    rollTimer += Data.GameManager.instance.DeltaTime;
                     rollSlerp = Mathf.SmoothDamp(rollSlerp, targetSlerp, ref rollVel, slerpSpeed);
                     if (rollTimer >= rollTime)
                     {
@@ -41,7 +41,7 @@ namespace Assets.Scripts.Player
 				{
 					controller.SlowlyResetSpriteLocation();
 				} else if (rollTimer != 0) {
-					controller.Sprite.localPosition = Vector3.MoveTowards(controller.Sprite.localPosition,Vector3.zero,Time.deltaTime*5f);
+					controller.Sprite.localPosition = Vector3.MoveTowards(controller.Sprite.localPosition,Vector3.zero,Data.GameManager.instance.DeltaTime*5f);
 				}
             }
         }
@@ -52,18 +52,18 @@ namespace Assets.Scripts.Player
             if (dir < 0)
             {
 				if(controller.heldObject) {
-					transform.Translate(Vector3.left * moveSpeed * 0.5f * Time.deltaTime * ratio, Space.World);
+					transform.Translate(Vector3.left * moveSpeed * 0.5f * Data.GameManager.instance.DeltaTime * ratio, Space.World);
 				} else {
-                	transform.Translate(Vector3.left * moveSpeed * Time.deltaTime * ratio, Space.World);
+                	transform.Translate(Vector3.left * moveSpeed * Data.GameManager.instance.DeltaTime * ratio, Space.World);
 				}
                 facingRight = false;
             }
             else
             {
 				if(controller.heldObject) {
-					transform.Translate(Vector3.right * moveSpeed * 0.5f * Time.deltaTime * ratio, Space.World);
+					transform.Translate(Vector3.right * moveSpeed * 0.5f * Data.GameManager.instance.DeltaTime * ratio, Space.World);
 				} else {
-                	transform.Translate(Vector3.right * moveSpeed * Time.deltaTime * ratio, Space.World);
+                	transform.Translate(Vector3.right * moveSpeed * Data.GameManager.instance.DeltaTime * ratio, Space.World);
 				}
                 facingRight = true;
             }
@@ -75,17 +75,17 @@ namespace Assets.Scripts.Player
             if (dir < 0)
 			{
 				if(controller.heldObject) {
-					transform.Translate(Vector3.down * moveSpeed * 0.5f * Time.deltaTime * ratio, Space.World);
+					transform.Translate(Vector3.down * moveSpeed * 0.5f * Data.GameManager.instance.DeltaTime * ratio, Space.World);
 				} else {
-                	transform.Translate(Vector3.down * moveSpeed * Time.deltaTime * ratio, Space.World);
+                	transform.Translate(Vector3.down * moveSpeed * Data.GameManager.instance.DeltaTime * ratio, Space.World);
 				}
             }
             else
             {
 				if(controller.heldObject) {
-					transform.Translate(Vector3.up * moveSpeed * 0.5f * Time.deltaTime * ratio, Space.World);
+					transform.Translate(Vector3.up * moveSpeed * 0.5f * Data.GameManager.instance.DeltaTime * ratio, Space.World);
 				} else {
-                	transform.Translate(Vector3.up * moveSpeed * Time.deltaTime * ratio, Space.World);
+                	transform.Translate(Vector3.up * moveSpeed * Data.GameManager.instance.DeltaTime * ratio, Space.World);
 				}
             }
             controller.UpdateSortingLayer();
@@ -99,8 +99,8 @@ namespace Assets.Scripts.Player
         }
         private void Roll(int dir)
         {
-            transform.Translate(dir * Vector3.right * rollSlerp * Time.deltaTime, Space.World);
-            currentZRotation = Mathf.SmoothDamp(currentZRotation, targetZRotation, ref rotationVel, rotationSpeed);
+            transform.Translate(dir * Vector3.right * rollSlerp * Data.GameManager.instance.DeltaTime, Space.World);
+            if(!Data.GameManager.instance.paused) currentZRotation = Mathf.SmoothDamp(currentZRotation, targetZRotation, ref rotationVel, rotationSpeed);
             controller.Sprite.transform.rotation = Quaternion.Euler(0, 0, currentZRotation);
         }
 

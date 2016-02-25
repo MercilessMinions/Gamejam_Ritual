@@ -13,6 +13,7 @@ GameObject:
   - 114: {fileID: 11445658}
   - 58: {fileID: 5889932}
   - 82: {fileID: 8210968}
+  - 114: {fileID: 11459730}
   m_Layer: 0
   m_Name: YellowCharacterFire
   m_TagString: Untagged
@@ -46,6 +47,7 @@ GameObject:
   - 4: {fileID: 411464}
   - 198: {fileID: 19819072}
   - 199: {fileID: 19920096}
+  - 114: {fileID: 11440934}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -196,6 +198,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11440934
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25d810869f7cd5340a86734afeb7c820, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11445658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -208,6 +221,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linkedCharacter: 2
+--- !u!114 &11459730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec803f99e71c1a4185451d2e1eb310f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &19819072
 ParticleSystem:
   m_ObjectHideFlags: 1

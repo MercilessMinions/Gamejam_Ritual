@@ -30,7 +30,7 @@ public class Monster : MonoBehaviour {
 	void Update () {
         //find the nearest player and face them
         findNearestPlayerAndFace();
-        transform.position = Vector2.MoveTowards(transform.position, playerChased.transform.position, Time.deltaTime * speed);
+        transform.position = Vector2.MoveTowards(transform.position, playerChased.transform.position, GameManager.instance.DeltaTime * speed);
 	}
 
     void OnTriggerEnter2D(Collider2D col)

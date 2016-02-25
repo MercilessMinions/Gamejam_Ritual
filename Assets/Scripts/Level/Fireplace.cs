@@ -17,7 +17,7 @@ namespace Assets.Scripts.Level
 		
 		// Update is called once per frame
 		void Update () {
-			fuel -= Time.deltaTime;
+			fuel -= Data.GameManager.instance.DeltaTime;
 			if(fuel > 8f) {
 				GetComponent<Animator>().SetInteger("FireLevel", 3);
 			} else if (fuel > 6f) {

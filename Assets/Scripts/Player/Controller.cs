@@ -115,7 +115,7 @@ namespace Assets.Scripts.Player
         }
 
 		public void SlowlyResetSpriteLocation() {
-			sprite.localPosition = Vector3.MoveTowards(sprite.localPosition,base.initPosition,Time.deltaTime*5f);
+			sprite.localPosition = Vector3.MoveTowards(sprite.localPosition,base.initPosition,Data.GameManager.instance.DeltaTime*5f);
 		}
 
         #region C# Properties

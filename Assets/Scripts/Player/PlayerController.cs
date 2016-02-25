@@ -32,7 +32,7 @@ namespace Assets.Scripts.Player
                 heldObject.UpdateSortingLayer();
                 anim.SetBool("Carry", true);
             }
-            if (Active)
+            if (Active && !Data.GameManager.instance.paused)
             {
 				float hor = ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, this.id);
 				float vert = ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, this.id);
@@ -43,7 +43,7 @@ namespace Assets.Scripts.Player
                     anim.SetFloat("Speed", 1f);
                     sprite.GetComponent<SpriteRenderer>().flipX = false;
 
-					walkSoundTimer -= Time.deltaTime;
+					walkSoundTimer -= Data.GameManager.instance.DeltaTime;
 					if(walkSoundTimer < 0) {
 						walkSoundTimer = 0.5f;
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.RandomRun());
@@ -55,7 +55,7 @@ namespace Assets.Scripts.Player
                     anim.SetFloat("Speed", 1f);
                     sprite.GetComponent<SpriteRenderer>().flipX = true;
 
-					walkSoundTimer -= Time.deltaTime;
+					walkSoundTimer -= Data.GameManager.instance.DeltaTime;
 					if(walkSoundTimer < 0) {
 						walkSoundTimer = 0.5f;
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.RandomRun());
@@ -66,7 +66,7 @@ namespace Assets.Scripts.Player
                     movement.MoveVertical(1, Mathf.Abs(vert));
                     anim.SetFloat("Speed", 1f);
 
-					walkSoundTimer -= Time.deltaTime;
+					walkSoundTimer -= Data.GameManager.instance.DeltaTime;
 					if(walkSoundTimer < 0) {
 						walkSoundTimer = 0.5f;
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.RandomRun());
@@ -77,7 +77,7 @@ namespace Assets.Scripts.Player
                     movement.MoveVertical(-1, Mathf.Abs(vert));
                     anim.SetFloat("Speed", 1f);
 
-					walkSoundTimer -= Time.deltaTime;
+					walkSoundTimer -= Data.GameManager.instance.DeltaTime;
 					if(walkSoundTimer < 0) {
 						walkSoundTimer = 0.5f;
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.RandomRun());
@@ -137,7 +137,7 @@ namespace Assets.Scripts.Player
         {
             if (heldObject || movement.Rolling || !active) return;
 			if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, id)) return;
-			if (ControllerManager.instance.GetTrigger(ControllerInputWrapper.Triggers.RightTrigger,this.id) > 0)
+			if (ControllerManager.instance.GetTrigger(ControllerInputWrapper.Triggers.RightTrigger,this.id) > 0 && !Data.GameManager.instance.paused)
             {
                 heldObject = col.transform.root.GetComponent<SpriteObject>();
                 if (heldObject)

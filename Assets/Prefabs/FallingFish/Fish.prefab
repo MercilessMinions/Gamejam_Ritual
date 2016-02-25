@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21265048}
   - 95: {fileID: 9580176}
   - 61: {fileID: 6182348}
+  - 114: {fileID: 11465944}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Untagged
@@ -122,6 +123,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 429844}
   splash: {fileID: 103346, guid: 665f6551fc86c4442804f3ee9c1c821c, type: 2}
+--- !u!114 &11465944
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec803f99e71c1a4185451d2e1eb310f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21217344
 SpriteRenderer:
   m_ObjectHideFlags: 1
