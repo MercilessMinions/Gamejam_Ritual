@@ -37,6 +37,12 @@ namespace Assets.Scripts.Player
                         Roll(rollDir);
                     }
                 }
+				if(rollTimer >= rollTime/2f && rollTimer != 0)
+				{
+					controller.SlowlyResetSpriteLocation();
+				} else if (rollTimer != 0) {
+					controller.Sprite.localPosition = Vector3.MoveTowards(controller.Sprite.localPosition,Vector3.zero,Time.deltaTime*5f);
+				}
             }
         }
 
@@ -89,12 +95,11 @@ namespace Assets.Scripts.Player
         {
             rolling = true;
             targetZRotation = -dir * 360;
-            rollDir = dir;
+			rollDir = dir;
         }
         private void Roll(int dir)
         {
             transform.Translate(dir * Vector3.right * rollSlerp * Time.deltaTime, Space.World);
-
             currentZRotation = Mathf.SmoothDamp(currentZRotation, targetZRotation, ref rotationVel, rotationSpeed);
             controller.Sprite.transform.rotation = Quaternion.Euler(0, 0, currentZRotation);
         }

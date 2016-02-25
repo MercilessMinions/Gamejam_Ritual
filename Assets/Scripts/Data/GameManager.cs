@@ -119,6 +119,7 @@ namespace Assets.Scripts.Data
                 controllers[i].Enable();
                 RespawnNode playerNode = respawnNodes.Find(x => x.ID.Equals(controllers[i].ID));
                 controllers[i].transform.position = playerNode.transform.position;
+				controllers[i].SetInitAttributes();
             }
                 
 			currentGame.Init();
@@ -181,7 +182,6 @@ namespace Assets.Scripts.Data
                         if (gamesQueue.Count == 0) RefillGames();
 						currentGame = gamesQueue[0];
                         gamesQueue.RemoveAt(0);
-//						Debug.Log("Next game chosen: " + currentGame.name);
 					} else {
 						demandingTimer -= Time.deltaTime;
 
@@ -290,6 +290,15 @@ namespace Assets.Scripts.Data
             controllers.Remove(removePlayer);
             characterToPlayer.Remove(character);
         }
+
+		public void RemoveAllPlayers() {
+			for(int i = 0; i < controllers.Count; i++) {
+				Destroy(controllers[i].gameObject);
+			}
+			controllers = new List<Controller>();
+			characterToPlayer = new Dictionary<Enums.Characters, PlayerID>();
+
+		}
 
         private void RefillGames()
         {

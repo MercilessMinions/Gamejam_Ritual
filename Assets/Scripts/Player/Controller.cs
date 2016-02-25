@@ -43,9 +43,6 @@ namespace Assets.Scripts.Player
 
 		protected override void Update() {
 			base.Update();
-			if(this.id == PlayerID.One) {
-				Debug.Log(life.IsInvincible);
-			}
 			if(life.IsInvincible) {
 				base.sprite.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.5f);
 			} else {
@@ -105,16 +102,21 @@ namespace Assets.Scripts.Player
         /// </summary>
         public void Enable()
         {
-           active = true;
-           gameObject.SetActive(true);
-           anim.SetBool("Club", movement.MeleeEnabled);
-            if (life.Health <= 0)
-            {
-                anim.SetTrigger("Dead");
-                anim.SetBool("Stay Dead", true);
-                active = false;
-            }
+           	active = true;
+           	gameObject.SetActive(true);
+			base.RespawnReset();
+			anim.SetBool("Club", movement.MeleeEnabled);
+			if (life.Health <= 0)
+			{
+			    anim.SetTrigger("Dead");
+			    anim.SetBool("Stay Dead", true);
+			    active = false;
+			}
         }
+
+		public void SlowlyResetSpriteLocation() {
+			sprite.localPosition = Vector3.MoveTowards(sprite.localPosition,base.initPosition,Time.deltaTime*5f);
+		}
 
         #region C# Properties
 

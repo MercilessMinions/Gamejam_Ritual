@@ -24,6 +24,7 @@ namespace Assets.Scripts.Level
         {
             base.Init();
             falling = true;
+			sprite.localPosition = Vector3.up*20f; 
         }
         protected override void HitGround()
         {
@@ -48,7 +49,6 @@ namespace Assets.Scripts.Level
                     game.FishCaught(GameManager.instance.CharacterToPlayer[character]);
                     Instantiate(splash, sprite.position + Vector3.down, Quaternion.Euler(new Vector3(-90, 0, 0)));
                     Destroy(transform.root.gameObject);
-                    Debug.Log("Caught");
                 }
             }
         }

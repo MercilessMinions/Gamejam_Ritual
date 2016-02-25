@@ -49,10 +49,10 @@ public class XboxOneControllerWrapper : ControllerInputWrapper {
                 axisName = getAxisName("5", "5", "4");
                 break;
 			case Axis.DPadX:
-				axisName = getAxisName("7", "", "");
+				axisName = getAxisName("X", "", "");
 				break;
 			case Axis.DPadY:
-				axisName = getAxisName("6", "", "");
+				axisName = getAxisName("Y", "", "");
 				break;
         }
         if (isRaw)

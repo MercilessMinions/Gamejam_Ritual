@@ -32,8 +32,9 @@ namespace Assets.Scripts.Data
 	            if (caymanTemp.GetComponent<Monster>().winners.Count <= 1)
 	            {
 	                finished = true;
-	                //if (!caymanTemp.GetComponent<Monster>().losers.contains(1))
-	                Winners.Add(caymanTemp.GetComponent<Monster>().winners[0]);
+					if (caymanTemp.GetComponent<Monster>().winners.Count > 0) {
+	                	Winners.Add(caymanTemp.GetComponent<Monster>().winners[0]);
+					}
 	                Destroy(caymanTemp);
 	            }
 			}

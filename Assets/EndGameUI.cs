@@ -20,6 +20,7 @@ public class EndGameUI : MonoBehaviour {
 	}
 
 	public void QuitToMenuPressed() {
+		GameManager.instance.RemoveAllPlayers();
 		SceneManager.LoadScene(0);
 	}
 }

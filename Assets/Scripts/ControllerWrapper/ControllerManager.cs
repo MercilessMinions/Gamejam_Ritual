@@ -29,6 +29,10 @@ public class ControllerManager  {
 		}
 	}
 
+	public void ResetInputs() {
+		playerControls = new Dictionary<PlayerID, ControllerInputWrapper>();
+	}
+
 	public void AddPlayer(ControllerInputWrapper.Buttons connectCode) {
 		KeyboardWrapper kw = new KeyboardWrapper(-1);
 		if(!playerControls.ContainsValue(kw) && kw.GetButton(connectCode)) {

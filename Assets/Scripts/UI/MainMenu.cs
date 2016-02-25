@@ -89,8 +89,6 @@ public class MainMenu : MonoBehaviour {
 			&& player2Ready) {
 			transform.GetChild(3).GetChild(6).GetComponent<CanvasGroup>().alpha += Time.deltaTime;
 			if(gameCountDownTimer <= 0) {
-
-                //TODO: GO TO GAME
                 if(player1Ready)
                 {
                     GameManager.instance.InitializePlayer((Assets.Scripts.Util.Enums.Characters)Mathf.Abs(player1SelectedCharacter % 4), PlayerID.One);
