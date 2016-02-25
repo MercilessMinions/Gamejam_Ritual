@@ -43,9 +43,21 @@ namespace Assets.Scripts.Level
             {
                 if (Mathf.Abs(GetComponent<SpriteRenderer>().sortingOrder - col.GetComponent<SpriteRenderer>().sortingOrder) < 100)
                 {
-                    Basket b = col.GetComponent<Basket>();
+                    Basket b = col.GetComponentInParent<Basket>();
                     if (b == null) return;
-                    Util.Enums.Characters character = col.GetComponent<Basket>().Character;
+                    Util.Enums.Characters character = b.Character;
+                    game.FishCaught(GameManager.instance.CharacterToPlayer[character]);
+                    Instantiate(splash, sprite.position + Vector3.down, Quaternion.Euler(new Vector3(-90, 0, 0)));
+                    Destroy(transform.root.gameObject);
+                }
+            }
+            else if(col.transform.root.tag.Equals("Baskets"))
+            {
+                if (Mathf.Abs(GetComponent<SpriteRenderer>().sortingOrder - col.GetComponent<SpriteRenderer>().sortingOrder) < 100)
+                {
+                    Basket b = col.GetComponentInParent<Basket>();
+                    if (b == null) return;
+                    Util.Enums.Characters character = b.Character;
                     game.FishCaught(GameManager.instance.CharacterToPlayer[character]);
                     Instantiate(splash, sprite.position + Vector3.down, Quaternion.Euler(new Vector3(-90, 0, 0)));
                     Destroy(transform.root.gameObject);

@@ -109,7 +109,8 @@ namespace Assets.Scripts.Player
 
 				if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, id))
                 {
-                    anim.SetBool("Attack", true);
+                    if(!fallingOffEdge)
+                        anim.SetBool("Attack", true);
                 }
                 else
                 {
@@ -138,7 +139,7 @@ namespace Assets.Scripts.Player
 			if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, id)) return;
 			if (ControllerManager.instance.GetTrigger(ControllerInputWrapper.Triggers.RightTrigger,this.id) > 0)
             {
-                heldObject = col.GetComponent<SpriteObject>();
+                heldObject = col.transform.root.GetComponent<SpriteObject>();
                 if (heldObject)
                 {
 					if(heldObject.GetComponent<PlayerController>()) {

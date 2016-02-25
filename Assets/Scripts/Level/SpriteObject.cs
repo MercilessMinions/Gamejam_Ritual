@@ -145,6 +145,12 @@ namespace Assets.Scripts.Level
             set { falling = value; }
         }
 
+        public bool FallingOffEdge
+        {
+            get { return fallingOffEdge; }
+            set { fallingOffEdge = value; }
+        }
+
         public float Force
         {
             get { return force; }

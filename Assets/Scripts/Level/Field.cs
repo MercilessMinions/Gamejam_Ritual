@@ -8,15 +8,14 @@ namespace Assets.Scripts.Level
 
         void OnTriggerExit2D(Collider2D col)
         {
+            Debug.Log(col.transform.name);
 			if(col.GetComponent<SpriteObject>()) {
 				col.GetComponent<SpriteObject>().FellOffEdge();
 			}
-//            if(col.tag.Equals("Player"))
-//            {
-//                Controller fallingPlayer = col.GetComponent<Controller>();
-//				fallingPlayer.FellOffEdge();
-////                fallingPlayer.LifeComponent.Deactivate();
-//			}
+            else if (col.GetComponentInParent<SpriteObject>())
+            {
+                col.GetComponentInParent<SpriteObject>().FellOffEdge();
+            }
         }
     } 
 }
