@@ -52,6 +52,7 @@ public class XboxOneControllerWrapper : ControllerInputWrapper {
 				axisName = getAxisName("X", "", "");
 				break;
 			case Axis.DPadY:
+				scale = -1;
 				axisName = getAxisName("Y", "", "");
 				break;
         }
