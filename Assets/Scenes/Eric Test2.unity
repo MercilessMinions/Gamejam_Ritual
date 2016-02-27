@@ -149,7 +149,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
 --- !u!1001 &148366318
 Prefab:
   m_ObjectHideFlags: 0
@@ -919,7 +919,9 @@ MonoBehaviour:
   players: []
   games:
   - {fileID: 2107048173}
+  DeltaTime: 0
   inGame: 0
+  paused: 0
   field: {fileID: 727848916}
 --- !u!4 &767091690
 Transform:
@@ -981,6 +983,26 @@ Prefab:
     - target: {fileID: 11461856, guid: ee6377885105845879fa65b88f141b94, type: 2}
       propertyPath: m_FontData.m_BestFit
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22446754, guid: ee6377885105845879fa65b88f141b94, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 22463016, guid: ee6377885105845879fa65b88f141b94, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 22466776, guid: ee6377885105845879fa65b88f141b94, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22484860, guid: ee6377885105845879fa65b88f141b94, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22491326, guid: ee6377885105845879fa65b88f141b94, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ee6377885105845879fa65b88f141b94, type: 2}
