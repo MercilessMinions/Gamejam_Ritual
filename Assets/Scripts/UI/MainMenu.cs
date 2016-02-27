@@ -56,29 +56,25 @@ public class MainMenu : MonoBehaviour {
 	private bool IsCharacterAvailable(PlayerID pid) {
 		switch(pid) {
 		case PlayerID.One:
-			if (player2Joined && (Mathf.Abs(player2SelectedCharacter%4) == Mathf.Abs(player1SelectedCharacter%4))) return false;
-			else if (player3Joined && (Mathf.Abs(player3SelectedCharacter%4) == Mathf.Abs(player1SelectedCharacter%4))) return false;
-			else if (player4Joined && (Mathf.Abs(player4SelectedCharacter%4) == Mathf.Abs(player1SelectedCharacter%4))) return false;
+			if (player2Ready && (Mathf.Abs(player2SelectedCharacter%4) == Mathf.Abs(player1SelectedCharacter%4))) return false;
+			else if (player3Ready && (Mathf.Abs(player3SelectedCharacter%4) == Mathf.Abs(player1SelectedCharacter%4))) return false;
+			else if (player4Ready && (Mathf.Abs(player4SelectedCharacter%4) == Mathf.Abs(player1SelectedCharacter%4))) return false;
 			else return true;
-			break;
 		case PlayerID.Two:
-			if (player1Joined && (Mathf.Abs(player1SelectedCharacter%4) == Mathf.Abs(player2SelectedCharacter%4))) return false;
-			else if (player3Joined && (Mathf.Abs(player3SelectedCharacter%4) == Mathf.Abs(player2SelectedCharacter%4))) return false;
-			else if (player4Joined && (Mathf.Abs(player4SelectedCharacter%4) == Mathf.Abs(player2SelectedCharacter%4))) return false;
+			if (player1Ready && (Mathf.Abs(player1SelectedCharacter%4) == Mathf.Abs(player2SelectedCharacter%4))) return false;
+			else if (player3Ready && (Mathf.Abs(player3SelectedCharacter%4) == Mathf.Abs(player2SelectedCharacter%4))) return false;
+			else if (player4Ready && (Mathf.Abs(player4SelectedCharacter%4) == Mathf.Abs(player2SelectedCharacter%4))) return false;
 			else return true;
-			break;
 		case PlayerID.Three:
-			if (player2Joined && (Mathf.Abs(player2SelectedCharacter%4) == Mathf.Abs(player3SelectedCharacter%4))) return false;
-			else if (player1Joined && (Mathf.Abs(player1SelectedCharacter%4) == Mathf.Abs(player3SelectedCharacter%4))) return false;
-			else if (player4Joined && (Mathf.Abs(player4SelectedCharacter%4) == Mathf.Abs(player3SelectedCharacter%4))) return false;
+			if (player2Ready && (Mathf.Abs(player2SelectedCharacter%4) == Mathf.Abs(player3SelectedCharacter%4))) return false;
+			else if (player1Ready && (Mathf.Abs(player1SelectedCharacter%4) == Mathf.Abs(player3SelectedCharacter%4))) return false;
+			else if (player4Ready && (Mathf.Abs(player4SelectedCharacter%4) == Mathf.Abs(player3SelectedCharacter%4))) return false;
 			else return true;
-			break;
 		case PlayerID.Four:
-			if (player2Joined && (Mathf.Abs(player2SelectedCharacter%4) == Mathf.Abs(player4SelectedCharacter%4))) return false;
-			else if (player3Joined && (Mathf.Abs(player3SelectedCharacter%4) == Mathf.Abs(player4SelectedCharacter%4))) return false;
-			else if (player1Joined && (Mathf.Abs(player1SelectedCharacter%4) == Mathf.Abs(player4SelectedCharacter%4))) return false;
+			if (player2Ready && (Mathf.Abs(player2SelectedCharacter%4) == Mathf.Abs(player4SelectedCharacter%4))) return false;
+			else if (player3Ready && (Mathf.Abs(player3SelectedCharacter%4) == Mathf.Abs(player4SelectedCharacter%4))) return false;
+			else if (player1Ready && (Mathf.Abs(player1SelectedCharacter%4) == Mathf.Abs(player4SelectedCharacter%4))) return false;
 			else return true;
-			break;
 		}
 		return false;
 	}
@@ -143,14 +139,14 @@ public class MainMenu : MonoBehaviour {
 					player1Ready = false;
 				}
 				if(!player1Ready) {
-					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.One) > 0
-						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.One) > 0) && navTimer < 0) {
+					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.One) > ControllerManager.CUSTOM_DEADZONE
+                        || ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.One) > ControllerManager.CUSTOM_DEADZONE) && navTimer < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer = 0.2f;
 						player1CharacterImage.sprite = charSprites[Mathf.Abs(++player1SelectedCharacter%4)];
 						player1CharacterName.text = charNames[Mathf.Abs(player1SelectedCharacter%4)];
-					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.One) < 0
-						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.One) < 0) && navTimer < 0) {
+					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.One) < -ControllerManager.CUSTOM_DEADZONE
+                        || ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.One) < -ControllerManager.CUSTOM_DEADZONE) && navTimer < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer = 0.2f;
 						player1CharacterImage.sprite = charSprites[Mathf.Abs(--player1SelectedCharacter%4)];
@@ -192,14 +188,14 @@ public class MainMenu : MonoBehaviour {
 					player2Ready = false;
 				}
 				if(!player2Ready) {
-					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Two) > 0
-						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Two) > 0) && navTimer2 < 0) {
+					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Two) > ControllerManager.CUSTOM_DEADZONE
+                        || ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Two) > ControllerManager.CUSTOM_DEADZONE) && navTimer2 < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer2 = 0.2f;
 						player2CharacterImage.sprite = charSprites[Mathf.Abs(++player2SelectedCharacter%4)];
 						player2CharacterName.text = charNames[Mathf.Abs(player2SelectedCharacter%4)];
-					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Two) < 0
-						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Two) < 0) && navTimer2 < 0) {
+					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Two) < -ControllerManager.CUSTOM_DEADZONE
+                        || ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Two) < -ControllerManager.CUSTOM_DEADZONE) && navTimer2 < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer2 = 0.2f;
 						player2CharacterImage.sprite = charSprites[Mathf.Abs(--player2SelectedCharacter%4)];
@@ -239,14 +235,14 @@ public class MainMenu : MonoBehaviour {
 					player3Ready = false;
 				}
 				if(!player3Ready) {
-					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Three) > 0
-						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Three) > 0) && navTimer3 < 0) {
+					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Three) > ControllerManager.CUSTOM_DEADZONE
+                        || ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Three) > ControllerManager.CUSTOM_DEADZONE) && navTimer3 < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer3 = 0.2f;
 						player3CharacterImage.sprite = charSprites[Mathf.Abs(++player3SelectedCharacter%4)];
 						player3CharacterName.text = charNames[Mathf.Abs(player3SelectedCharacter%4)];
-					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Three) < 0
-						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Three) < 0) && navTimer3 < 0) {
+					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Three) < -ControllerManager.CUSTOM_DEADZONE
+                        || ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Three) < -ControllerManager.CUSTOM_DEADZONE) && navTimer3 < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer3 = 0.2f;
 						player3CharacterImage.sprite = charSprites[Mathf.Abs(--player3SelectedCharacter%4)];
@@ -286,14 +282,14 @@ public class MainMenu : MonoBehaviour {
 					player4Ready = false;
 				}
 				if(!player4Ready) {
-					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Four) > 0
-						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Four) > 0) && navTimer4 < 0) {
+					if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Four) > ControllerManager.CUSTOM_DEADZONE
+                        || ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Four) > ControllerManager.CUSTOM_DEADZONE) && navTimer4 < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer4 = 0.2f;
 						player4CharacterImage.sprite = charSprites[Mathf.Abs(++player4SelectedCharacter%4)];
 						player4CharacterName.text = charNames[Mathf.Abs(player4SelectedCharacter%4)];
-					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Four) < 0
-						|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Four) < 0) && navTimer4 < 0) {
+					} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadX, PlayerID.Four) < -ControllerManager.CUSTOM_DEADZONE
+                        || ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, PlayerID.Four) < -ControllerManager.CUSTOM_DEADZONE) && navTimer4 < 0) {
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 						navTimer4 = 0.2f;
 						player4CharacterImage.sprite = charSprites[Mathf.Abs(--player4SelectedCharacter%4)];
@@ -332,18 +328,19 @@ public class MainMenu : MonoBehaviour {
 			if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, PlayerID.One)) {
 				ExecuteEvents.Execute(curSelectedGameObject, new PointerEventData(cur), ExecuteEvents.submitHandler);
 			}
-			if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) > 0f
-				|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, PlayerID.One) > 0f) && navTimer < 0) {
-				SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
+            if ((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) > ControllerManager.CUSTOM_DEADZONE
+                || ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, PlayerID.One) > 0) && navTimer < 0) {
+                SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 				navTimer = 0.3f;
 				Selectable sel = curSelectedGameObject.GetComponent<Selectable>();
 				Selectable up = sel.FindSelectableOnUp();
 				if(up) {
 					cur.SetSelectedGameObject(up.gameObject);
 				}
-			} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) < 0f
-				|| ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, PlayerID.One) < 0f) && navTimer < 0) {
-				SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
+			} else if((ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.DPadY, PlayerID.One) < -ControllerManager.CUSTOM_DEADZONE
+                || ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, PlayerID.One) < -ControllerManager.CUSTOM_DEADZONE) && navTimer < 0) {
+                
+                SFXManager.instance.source.PlayOneShot(SFXManager.instance.menuClick);
 				navTimer = 0.3f;
 				Selectable sel = curSelectedGameObject.GetComponent<Selectable>();
 				Selectable down = sel.FindSelectableOnDown();

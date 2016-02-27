@@ -19,7 +19,7 @@ namespace Assets.Scripts.Level
 		protected Vector3 initPosition;
 		protected float initialHeightOffGround;
 		private Vector3 initScale;
-		private Vector3 respawnPosition;
+        private Vector3 respawnPosition = new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
 		private bool setInitVals = true;
 
 		protected bool fallingOffEdge;
@@ -65,9 +65,11 @@ namespace Assets.Scripts.Level
 				if(transform.localScale.x > 0) {
 					transform.localScale -= Vector3.one*Data.GameManager.instance.DeltaTime;
 					transform.Rotate(new Vector3(0,0,Data.GameManager.instance.DeltaTime*100f));
-				} else if (respawnPosition != null) {
+				} else if (respawnPosition.magnitude != Mathf.Infinity) {
 					RespawnReset();
-				}
+				} else {
+                    Destroy(gameObject);
+                }
 			} else {
 	            heightOffGround = sprite.position.y - transform.position.y;
 				if (heightOffGround > initialHeightOffGround && falling)
@@ -83,7 +85,7 @@ namespace Assets.Scripts.Level
         }
 
 		protected void RespawnReset() {
-			if(respawnPosition != null) transform.position = respawnPosition;
+			if(respawnPosition.magnitude != Mathf.Infinity) transform.position = respawnPosition;
 			UpdateSortingLayer();
 			sprite.localPosition = initPosition;
 			transform.localScale = initScale;

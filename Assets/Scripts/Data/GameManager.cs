@@ -4,9 +4,9 @@ using Assets.Scripts.Level;
 using Assets.Scripts.Player;
 using Assets.Scripts.Timers;
 using Assets.Scripts.Util;
-using Assets.Scripts.Level;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Data
@@ -88,10 +88,8 @@ namespace Assets.Scripts.Data
                 Destroy(gameObject);
             }
             controllers = new List<Controller>();
-            respawnNodes = new List<RespawnNode>();
             characterToPlayer = new Dictionary<Enums.Characters, PlayerID>();
-            goblets = new List<Goblet>();
-            gamesQueue = new List<Minigame>();
+           
         }
 
         void OnLevelWasLoaded(int i)
@@ -102,6 +100,14 @@ namespace Assets.Scripts.Data
         public void StartGame()
         {
             inGame = true;
+            gameWon = false;
+            playerScores = new int[4];
+            transitionStarted = false;
+            scoreAdded = false;
+
+            respawnNodes = new List<RespawnNode>();
+            goblets = new List<Goblet>();
+            gamesQueue = new List<Minigame>();
 
             RespawnNode[] findNodes = FindObjectsOfType<RespawnNode>();
             for (int i = 0; i < findNodes.Length; i++)
@@ -128,7 +134,8 @@ namespace Assets.Scripts.Data
                 controllers[i].Enable();
                 RespawnNode playerNode = respawnNodes.Find(x => x.ID.Equals(controllers[i].ID));
                 controllers[i].transform.position = playerNode.transform.position;
-				controllers[i].SetInitAttributes();
+                controllers[i].SetInitAttributes();
+                controllers[i].RespawnAt(playerNode.transform.position);
             }
                 
 			currentGame.Init();
@@ -229,15 +236,20 @@ namespace Assets.Scripts.Data
                 }
 				dialogHolder.transform.localScale = Vector3.one*Mathf.Max(1.5f,(Mathf.Sin(Time.time*8f)+1));
 			} else if(gameWon) {
+                inGame = false;
 				winTimer -= DeltaTime;
 				if(winTimer <= 0) {
 					gameWon = false;
+                    Camera.main.GetComponent<EndGameUI>().enabled = true;
 					Camera.main.GetComponent<Animator>().SetTrigger("GameEnd");
 					for(int i = 0; i < controllers.Count; i++) {
 						if(controllers[i].Character == winningCharacter) {
 							winningCharacterSprite.GetComponent<Image>().sprite = controllers[i].Sprite.GetComponent<SpriteRenderer>().sprite;
 							winText.GetComponent<Text>().text = "Congratulations! " + controllers[i].Character + " Was Sacrificed!";
-							break;
+                            //winText.GetComponent<Text>().color = Color.black;
+                            EventSystem.current.SetSelectedGameObject(GameObject.Find("PlayAgain"));
+
+                            break;
 						}
 					}
 				}

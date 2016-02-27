@@ -29,7 +29,7 @@ namespace Assets.Scripts.Level
         protected override void HitGround()
         {
             base.HitGround();
-            Destroy(transform.root.gameObject);
+            Destroy(gameObject);
         }
 
         private void EndGame()
@@ -39,7 +39,7 @@ namespace Assets.Scripts.Level
 
         void OnTriggerEnter2D(Collider2D col)
         {
-            if (col.transform.root.tag.Equals("Player"))
+            if (col.transform.root.tag.Equals("Player") || col.transform.root.tag.Equals("Baskets"))
             {
                 if (Mathf.Abs(GetComponent<SpriteRenderer>().sortingOrder - col.GetComponent<SpriteRenderer>().sortingOrder) < 100)
                 {
@@ -48,19 +48,7 @@ namespace Assets.Scripts.Level
                     Util.Enums.Characters character = b.Character;
                     game.FishCaught(GameManager.instance.CharacterToPlayer[character]);
                     Instantiate(splash, sprite.position + Vector3.down, Quaternion.Euler(new Vector3(-90, 0, 0)));
-                    Destroy(transform.root.gameObject);
-                }
-            }
-            else if(col.transform.root.tag.Equals("Baskets"))
-            {
-                if (Mathf.Abs(GetComponent<SpriteRenderer>().sortingOrder - col.GetComponent<SpriteRenderer>().sortingOrder) < 100)
-                {
-                    Basket b = col.GetComponentInParent<Basket>();
-                    if (b == null) return;
-                    Util.Enums.Characters character = b.Character;
-                    game.FishCaught(GameManager.instance.CharacterToPlayer[character]);
-                    Instantiate(splash, sprite.position + Vector3.down, Quaternion.Euler(new Vector3(-90, 0, 0)));
-                    Destroy(transform.root.gameObject);
+                    Destroy(gameObject);
                 }
             }
         }

@@ -37,7 +37,7 @@ namespace Assets.Scripts.Player
 				float hor = ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, this.id);
 				float vert = ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, this.id);
 
-                if (hor > 0)
+                if (hor > ControllerManager.CUSTOM_DEADZONE)
                 {
                     movement.MoveHorizontal(1, Mathf.Abs(hor));
                     anim.SetFloat("Speed", 1f);
@@ -49,7 +49,7 @@ namespace Assets.Scripts.Player
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.RandomRun());
 					}
                 }
-                else if (hor < 0)
+                else if (hor < -ControllerManager.CUSTOM_DEADZONE)
                 {
                     movement.MoveHorizontal(-1, Mathf.Abs(hor));
                     anim.SetFloat("Speed", 1f);
@@ -61,7 +61,7 @@ namespace Assets.Scripts.Player
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.RandomRun());
 					}
                 }
-                if (vert > 0)
+                if (vert > ControllerManager.CUSTOM_DEADZONE)
                 {
                     movement.MoveVertical(1, Mathf.Abs(vert));
                     anim.SetFloat("Speed", 1f);
@@ -72,7 +72,7 @@ namespace Assets.Scripts.Player
 						SFXManager.instance.source.PlayOneShot(SFXManager.instance.RandomRun());
 					}
                 }
-                else if (vert < 0)
+                else if (vert < -ControllerManager.CUSTOM_DEADZONE)
                 {
                     movement.MoveVertical(-1, Mathf.Abs(vert));
                     anim.SetFloat("Speed", 1f);

@@ -446,8 +446,8 @@ MonoBehaviour:
     m_Mode: 4
     m_SelectOnUp: {fileID: 116331183}
     m_SelectOnDown: {fileID: 287526246}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 101089013}
+    m_SelectOnRight: {fileID: 101089013}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -591,8 +591,8 @@ MonoBehaviour:
     m_Mode: 4
     m_SelectOnUp: {fileID: 979488435}
     m_SelectOnDown: {fileID: 101089013}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 116331183}
+    m_SelectOnRight: {fileID: 116331183}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1430,8 +1430,8 @@ MonoBehaviour:
     m_Mode: 4
     m_SelectOnUp: {fileID: 101089013}
     m_SelectOnDown: {fileID: 979488435}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 287526246}
+    m_SelectOnRight: {fileID: 287526246}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2961,6 +2961,10 @@ Prefab:
       propertyPath: inputConfigurations.Array.data[1].isExpanded
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 126362, guid: fc1ab99d3dc953949ab933c5c773a303, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11413448, guid: fc1ab99d3dc953949ab933c5c773a303, type: 2}
     - {fileID: 11493406, guid: fc1ab99d3dc953949ab933c5c773a303, type: 2}
@@ -4229,8 +4233,8 @@ MonoBehaviour:
     m_Mode: 4
     m_SelectOnUp: {fileID: 287526246}
     m_SelectOnDown: {fileID: 116331183}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 979488435}
+    m_SelectOnRight: {fileID: 979488435}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
