@@ -14,6 +14,8 @@ public class ControllerManager  {
 
 	public static ControllerManager instance;
 
+    public const float CUSTOM_DEADZONE = 0.15f;
+
     public ControllerManager()
     {
 		setUpPlatform();
