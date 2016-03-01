@@ -24,7 +24,6 @@ public class MainMenu : MonoBehaviour {
 	private float gameCountDownTimer = 5f;
 
 	public static GameObject player1Char, player2Char, player3Char, player4Char;
-	public GameObject char1Prefab, char2Prefab, char3Prefab, char4Prefab;
 
 	private float navTimer, navTimer2, navTimer3, navTimer4;
 

@@ -175,22 +175,6 @@ namespace Assets.Scripts.Data
         {
             if (inGame)
             {
-                if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.Start, PlayerID.One))
-                {
-                    if (!paused)
-                    {
-                        paused = true;
-                        if (Pause != null) Pause();
-                    }
-                    else
-                    {
-                        paused = false;
-                        if (Unpause != null) Unpause();
-                    }
-                }
-
-                if (paused) DeltaTime = 0;
-                else DeltaTime = Time.deltaTime;
 
                 if (!currentGame.finished && !transitionStarted)
                 {
@@ -198,6 +182,20 @@ namespace Assets.Scripts.Data
 					if(veryFirstTimer <= 0) {
                     	currentGame.Run();
 					}
+					if(ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.Start, PlayerID.One))
+					{
+						if (!paused)
+						{
+							PauseGame();
+						}
+						else
+						{
+							UnPauseGame();
+						}
+					}
+
+					if (paused) DeltaTime = 0;
+					else DeltaTime = Time.deltaTime;
 
                 }
                 else
@@ -291,6 +289,20 @@ namespace Assets.Scripts.Data
 
             }
         }
+
+		public void PauseGame() {
+			paused = true;
+			if(Pause != null) { 
+				Pause();
+			}
+		}
+
+		public void UnPauseGame() {
+			paused = false;
+			if(Unpause != null) {
+				Unpause();
+			}
+		}
 
         private void ResawnHelper(CountdownTimer t)
         {
