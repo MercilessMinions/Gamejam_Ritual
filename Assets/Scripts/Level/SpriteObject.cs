@@ -60,7 +60,7 @@ namespace Assets.Scripts.Level
 
 		protected virtual void Update()
         {
-			if(fallingOffEdge) {
+			if(fallingOffEdge && tag.Equals(transform.root.tag)) {
 				GetComponent<SpriteRenderer>().enabled = false;
 				if(transform.localScale.x > 0) {
 					transform.localScale -= Vector3.one*Data.GameManager.instance.DeltaTime;

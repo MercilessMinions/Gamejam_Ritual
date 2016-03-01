@@ -10,8 +10,8 @@ namespace Assets.Scripts.Level
         {
 			if(col.GetComponent<SpriteObject>())
             {
-				col.GetComponent<SpriteObject>().FellOffEdge();
-			}
+                col.GetComponent<SpriteObject>().FellOffEdge();
+            }
             else if (col.GetComponentInParent<SpriteObject>())
             {
                 col.GetComponentInParent<SpriteObject>().FellOffEdge();
