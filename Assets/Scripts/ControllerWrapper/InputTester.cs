@@ -2,7 +2,9 @@
 
 public class InputTester : MonoBehaviour {
 
-    private static InputTester instance;
+	public static InputTester instance;
+
+	public Sprite XBOX_A, PS4_A, KEY_GEN, XBOX_START, PS4_START, KEY_START;
 
     void Awake()
     {

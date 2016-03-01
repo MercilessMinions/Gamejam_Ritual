@@ -6,7 +6,7 @@ public enum PlayerID {None, One, Two, Three, Four};
 
 public class ControllerManager  {
    
-    public enum ControlType { Xbox, PS3, PS4 };
+    public enum ControlType { None, Xbox, PS4, Keyboard };
     public enum OperatingSystem { Win, OSX, Linux };
 
 	public OperatingSystem currentOS;
@@ -28,6 +28,21 @@ public class ControllerManager  {
 	public int NumPlayers {
 		get {
 			return playerControls.Count;
+		}
+	}
+
+	public ControlType PlayerControlType(PlayerID id) {
+		if(!playerControls.ContainsKey(id)) return ControlType.None;
+		if(playerControls[id].GetType().Equals(typeof(Xbox360ControllerWrapper))
+			|| playerControls[id].GetType().Equals(typeof(XboxOneControllerWrapper))) {
+			return ControlType.Xbox;
+		} else if(playerControls[id].GetType().Equals(typeof(PS4ControllerWrapper))
+			|| playerControls[id].GetType().Equals(typeof(PS3ControllerWrapper))) {
+			return ControlType.PS4;
+		}  else if(playerControls[id].GetType().Equals(typeof(KeyboardWrapper))) {
+			return ControlType.Keyboard;
+		} else {
+			return ControlType.None;
 		}
 	}
 
