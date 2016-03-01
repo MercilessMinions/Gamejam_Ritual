@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 namespace Assets.Scripts.Data
 {
@@ -45,6 +46,15 @@ namespace Assets.Scripts.Data
                     if (GameManager.instance.AllPlayers[i].LifeComponent.Health > 0) temp++;
                 }
                 numAlive = temp;
+            }
+        }
+
+        public override void ForceEnd()
+        {
+            for (int i = 0; i < GameManager.instance.AllPlayers.Count; i++)
+            {
+                GameManager.instance.AllPlayers[i].LifeComponent.Health = 100f;
+                GameManager.instance.AllPlayers[i].MovementComponent.MeleeEnabled = false;
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 namespace Assets.Scripts.Data
 {
@@ -38,6 +39,11 @@ namespace Assets.Scripts.Data
 	                Destroy(caymanTemp);
 	            }
 			}
+        }
+
+        public override void ForceEnd()
+        {
+            if(caymanTemp) Destroy(caymanTemp);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Level;
 using Assets.Scripts.Timers;
@@ -79,17 +78,7 @@ namespace Assets.Scripts.Data
             fish.GetComponent<Fish>().Game = this;
         }
 
-        public override void Run()
-        {
-            //throw new NotImplementedException();
-//			foreach(Basket b in inGameBaskets) {
-//				if(b.HasFallenOffEdge()) {
-//					b.Active = true;
-//					b.transform.position = new Vector2(5,-3);
-//					b.ResetScale();
-//				}
-//			}
-        }
+        public override void Run(){}
 
         public void FishCaught(PlayerID id)
         {
@@ -97,7 +86,12 @@ namespace Assets.Scripts.Data
             if(fishCaught[((int)id)-1] >= targetFish)
             {
                 finished = true;
-                spawnTimer.Initialize(0, "Fish Timer", 0);
+                Destroy(spawnTimer);
+                Fish[] allFish = FindObjectsOfType<Fish>();
+                for(int i = 0; i < allFish.Length; i++)
+                {
+                    Destroy(allFish[i].transform.root.gameObject);
+                }
                 Winners.Add(id);
                 if (EndGame != null) EndGame();
                 for(int i = 0; i < inGameBaskets.Count; i++)
@@ -107,6 +101,12 @@ namespace Assets.Scripts.Data
                     Destroy(inGameBaskets[i].gameObject);
                 }
             }
+        }
+
+        public override void ForceEnd()
+        {
+            Destroy(spawnTimer);
+            if (EndGame != null) EndGame();
         }
     }
 }

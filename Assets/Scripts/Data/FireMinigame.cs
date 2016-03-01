@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Assets.Scripts.Level;
 using System.Collections.Generic;
 
@@ -64,7 +63,7 @@ namespace Assets.Scripts.Data
 				else survivor = f;
 			}
 
-			if(numDead == GameManager.instance.AllPlayers.Count - 1) {
+			if(numDead >= GameManager.instance.AllPlayers.Count - 1) {
 				winnerFound -= Data.GameManager.instance.DeltaTime;
 				if(winnerFound < 0) {
 					for(int i = 0; i < GameManager.instance.AllPlayers.Count; i++) {
@@ -84,6 +83,17 @@ namespace Assets.Scripts.Data
 			}
 		}
 
-
-	}
+        public override void ForceEnd()
+        {
+            for (int i = 0; i < inGameLogs.Count; i++)
+            {
+                Destroy(inGameLogs[i].gameObject);
+            }
+            for (int i = 0; i < inGameFirePlaces.Count; i++)
+            {
+                Destroy(inGameFirePlaces[i].gameObject);
+            }
+            winnerFound = 2f;
+        }
+    }
 }

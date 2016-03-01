@@ -99,6 +99,7 @@ namespace Assets.Scripts.Data
 
         public void StartGame()
         {
+            if (currentGame) currentGame.ForceEnd();
             inGame = true;
             gameWon = false;
             playerScores = new int[4];

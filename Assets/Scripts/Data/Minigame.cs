@@ -13,6 +13,7 @@ namespace Assets.Scripts.Data
 
         public abstract void Init();
         public abstract void Run();
+        public abstract void ForceEnd();
 
         #region C# Properties
         public List<PlayerID> Winners
