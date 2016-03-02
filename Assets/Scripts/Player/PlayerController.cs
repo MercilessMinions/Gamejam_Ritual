@@ -98,7 +98,7 @@ namespace Assets.Scripts.Player
                     anim.SetBool("Rolling", true);
 					SFXManager.instance.source.PlayOneShot(SFXManager.instance.roll);
                 }
-
+                Debug.Log(this.id + " " + ControllerManager.instance.GetTrigger(ControllerInputWrapper.Triggers.RightTrigger, this.id));
 				if (ControllerManager.instance.GetTrigger(ControllerInputWrapper.Triggers.RightTrigger,this.id) <= 0)
                 {
                     if (pickedUpThisTurn)

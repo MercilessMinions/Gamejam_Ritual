@@ -158,17 +158,17 @@ public class Xbox360ControllerWrapper : ControllerInputWrapper {
 		if(ControllerManager.instance.currentOS == ControllerManager.OperatingSystem.Win) {
 			axisName = getAxisName("3","","");
 			switch (trigger)
-			{
-			case Triggers.LeftTrigger:
-				if (isRaw) return Mathf.Abs(Mathf.Min(0,Input.GetAxisRaw(axisName)));
-				else return Mathf.Abs(Mathf.Min(0,Input.GetAxis(axisName)));
-				break;
-			case Triggers.RightTrigger:
-				if (isRaw) return Mathf.Max(0,Input.GetAxisRaw(axisName));
-				else return Mathf.Max(0,Input.GetAxis(axisName));
-				break;
-			}
-		} else {
+            {
+                case Triggers.LeftTrigger:
+                    if (isRaw) return Mathf.Max(0, Input.GetAxisRaw(axisName));
+                    else return Mathf.Max(0, Input.GetAxis(axisName));
+                    break;
+                case Triggers.RightTrigger:
+                    if (isRaw) return Mathf.Abs(Mathf.Min(0, Input.GetAxisRaw(axisName)));
+                    else return Mathf.Abs(Mathf.Min(0, Input.GetAxis(axisName)));
+                    break;
+            }
+        } else {
 	        switch (trigger)
 	        {
 	            case Triggers.LeftTrigger:
@@ -187,5 +187,6 @@ public class Xbox360ControllerWrapper : ControllerInputWrapper {
 	            return Input.GetAxis(axisName);
 	        }
 		}
+        return 0;
     }
 }

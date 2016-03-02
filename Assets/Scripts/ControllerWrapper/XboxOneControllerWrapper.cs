@@ -161,13 +161,13 @@ public class XboxOneControllerWrapper : ControllerInputWrapper {
 			switch (trigger)
 			{
 			case Triggers.LeftTrigger:
-				if (isRaw) return Mathf.Abs(Mathf.Min(0,Input.GetAxisRaw(axisName)));
-				else return Mathf.Abs(Mathf.Min(0,Input.GetAxis(axisName)));
-				break;
+                if (isRaw) return Mathf.Max(0, Input.GetAxisRaw(axisName));
+                else return Mathf.Max(0, Input.GetAxis(axisName));
+                break;
 			case Triggers.RightTrigger:
-				if (isRaw) return Mathf.Max(0,Input.GetAxisRaw(axisName));
-				else return Mathf.Max(0,Input.GetAxis(axisName));
-				break;
+                if (isRaw) return Mathf.Abs(Mathf.Min(0, Input.GetAxisRaw(axisName)));
+                else return Mathf.Abs(Mathf.Min(0, Input.GetAxis(axisName)));
+                break;
 			}
 		} else {
 			switch (trigger)
@@ -188,5 +188,6 @@ public class XboxOneControllerWrapper : ControllerInputWrapper {
 				return Input.GetAxis(axisName);
 			}
 		}
+        return 0;
 	}
 }

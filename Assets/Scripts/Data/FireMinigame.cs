@@ -76,7 +76,8 @@ namespace Assets.Scripts.Data
 					for(int i = 0; i < inGameFirePlaces.Count; i++) {
 						if(inGameFirePlaces[i] != null) Destroy(inGameFirePlaces[i].gameObject);
 					}
-					Winners.Add(GameManager.instance.CharacterToPlayer[survivor.linkedCharacter]);
+					if(survivor)
+                        Winners.Add(GameManager.instance.CharacterToPlayer[survivor.linkedCharacter]);
 					finished = true;
 					winnerFound = 2f;
 				}
