@@ -368,4 +368,9 @@ public class MainMenu : MonoBehaviour {
 		player3Ready = false;
 		player4Ready = false;
 	}
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
