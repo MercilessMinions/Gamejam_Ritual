@@ -25,6 +25,11 @@ public class ControllerManager  {
 		}
     }
 
+	public void ClearPlayers()
+	{
+		playerControls = new Dictionary<PlayerID, ControllerInputWrapper>();
+	}
+
 	public int NumPlayers {
 		get {
 			return playerControls.Count;

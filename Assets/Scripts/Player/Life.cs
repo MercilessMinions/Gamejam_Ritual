@@ -16,6 +16,8 @@ namespace Assets.Scripts.Player
 
         private float health = MAX_HEALTH;
 
+		private GameObject healthTransform;
+
 		private float respawnInvincibility;
 
         [SerializeField]
@@ -65,10 +67,28 @@ namespace Assets.Scripts.Player
 			respawnInvincibility = 1f;
         }
 
+		public void DisplayHealth() {
+			if(healthTransform == null) healthTransform = transform.FindChild("HealthBG").gameObject;
+			healthTransform.SetActive(true);
+		}
+
+		public void HideHealth() {
+			if(healthTransform == null) healthTransform = transform.FindChild("HealthBG").gameObject;
+			healthTransform.SetActive(false);
+		}
+
 		void Update() {
 			if(respawnInvincibility > 0) {
 				respawnInvincibility -= Data.GameManager.instance.DeltaTime;
 			}
+			if(healthTransform.activeSelf) {
+				healthTransform.transform.GetChild(0).localScale = new Vector3((health/MAX_HEALTH),1,1);
+			}
+			
+		}
+
+		void Start() {
+			healthTransform = transform.FindChild("HealthBG").gameObject;
 		}
 
 

@@ -82,10 +82,12 @@ namespace Assets.Scripts.Player
             }
             else
             {
-				if(controller.heldObject) {
-					transform.Translate(Vector3.up * moveSpeed * 0.5f * Data.GameManager.instance.DeltaTime * ratio, Space.World);
-				} else {
-                	transform.Translate(Vector3.up * moveSpeed * Data.GameManager.instance.DeltaTime * ratio, Space.World);
+				if(!(transform.position.x > -3 && transform.position.x < 3 && transform.position.y > 2)) {
+					if(controller.heldObject) {
+						transform.Translate(Vector3.up * moveSpeed * 0.5f * Data.GameManager.instance.DeltaTime * ratio, Space.World);
+					} else {
+	                	transform.Translate(Vector3.up * moveSpeed * Data.GameManager.instance.DeltaTime * ratio, Space.World);
+					}
 				}
             }
             controller.UpdateSortingLayer();

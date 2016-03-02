@@ -16,6 +16,7 @@ namespace Assets.Scripts.Data
             {
                 GameManager.instance.AllPlayers[i].MovementComponent.MeleeEnabled = true;
 				GameManager.instance.AllPlayers[i].LifeComponent.Health = 100;
+				GameManager.instance.AllPlayers[i].LifeComponent.DisplayHealth();
 				GameManager.instance.AllPlayers[i].Anim.SetBool("Stay Dead", false);
 				GameManager.instance.AllPlayers[i].Active = true;
             }
@@ -29,6 +30,7 @@ namespace Assets.Scripts.Data
                     if (GameManager.instance.AllPlayers[i].LifeComponent.Health > 0) Winners.Add(GameManager.instance.AllPlayers[i].ID);
                     finished = true;
 					GameManager.instance.AllPlayers[i].MovementComponent.MeleeEnabled = false;
+					GameManager.instance.AllPlayers[i].LifeComponent.HideHealth();
                 }
             }
 			if (numAlive == 0) {
@@ -36,6 +38,7 @@ namespace Assets.Scripts.Data
 				for (int i = 0; i < GameManager.instance.AllPlayers.Count; i++)
 				{
 					GameManager.instance.AllPlayers[i].MovementComponent.MeleeEnabled = false;
+					GameManager.instance.AllPlayers[i].LifeComponent.HideHealth();
 				}
 			}
             else
@@ -55,6 +58,7 @@ namespace Assets.Scripts.Data
             {
                 GameManager.instance.AllPlayers[i].LifeComponent.Health = 100f;
                 GameManager.instance.AllPlayers[i].MovementComponent.MeleeEnabled = false;
+				GameManager.instance.AllPlayers[i].LifeComponent.HideHealth();
             }
         }
     }
