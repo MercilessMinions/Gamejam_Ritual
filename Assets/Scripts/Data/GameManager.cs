@@ -234,7 +234,7 @@ namespace Assets.Scripts.Data
 						}
 					}
                 }
-				dialogHolder.transform.localScale = Vector3.one*Mathf.Max(1.5f,(Mathf.Sin(Time.time*8f)+1));
+				if(dialogHolder != null) dialogHolder.transform.localScale = Vector3.one*Mathf.Max(1.5f,(Mathf.Sin(Time.time*8f)+1));
 			} else if(gameWon) {
                 inGame = false;
 				winTimer -= DeltaTime;

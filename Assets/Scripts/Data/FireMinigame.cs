@@ -74,7 +74,7 @@ namespace Assets.Scripts.Data
 						Destroy(inGameLogs[i].gameObject);
 					}
 					for(int i = 0; i < inGameFirePlaces.Count; i++) {
-						Destroy(inGameFirePlaces[i].gameObject);
+						if(inGameFirePlaces[i] != null) Destroy(inGameFirePlaces[i].gameObject);
 					}
 					Winners.Add(GameManager.instance.CharacterToPlayer[survivor.linkedCharacter]);
 					finished = true;
@@ -91,7 +91,7 @@ namespace Assets.Scripts.Data
             }
             for (int i = 0; i < inGameFirePlaces.Count; i++)
             {
-                Destroy(inGameFirePlaces[i].gameObject);
+				if(inGameFirePlaces[i] != null) Destroy(inGameFirePlaces[i].gameObject);
             }
             winnerFound = 2f;
         }
