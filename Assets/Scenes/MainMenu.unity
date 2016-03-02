@@ -4366,6 +4366,7 @@ MonoBehaviour:
   inGame: 0
   paused: 0
   field: {fileID: 0}
+  bloodDrainPrefab: {fileID: 125092, guid: 9f734c0ba5f734f04995232d91e29a61, type: 2}
 --- !u!4 &760457823
 Transform:
   m_ObjectHideFlags: 0

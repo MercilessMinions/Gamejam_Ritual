@@ -63,6 +63,7 @@ namespace Assets.Scripts.Data
         public bool paused = false;
 
         public GameObject field;
+		public GameObject bloodDrainPrefab;
 
 		private GameObject dialogHolder;
 
@@ -260,9 +261,12 @@ namespace Assets.Scripts.Data
             bool scoreReached = false;
             foreach(PlayerID id in winners)
             {
+				GameObject go = (GameObject)GameObject.Instantiate(bloodDrainPrefab);
+				go.GetComponent<BloodDrainEffect>().start = GetPlayer(id).transform.position;
+				Enums.Characters c = characterToPlayer.FirstOrDefault(x => x.Value == id).Key;
+				Goblet g = goblets.Find(x => x.character.Equals(c));
+				go.GetComponent<BloodDrainEffect>().end = g.transform.position;
                 playerScores[((int)id)-1] += pointStep;
-                Enums.Characters c = characterToPlayer.FirstOrDefault(x => x.Value == id).Key;
-                Goblet g = goblets.Find(x => x.character.Equals(c));
 				g.UpdateScale(Mathf.Clamp01(((float)playerScores[((int)id) - 1]) / (float)MAX_SCORE));
 				if (playerScores[((int)id)-1] >= MAX_SCORE) {
 					scoreReached = true;
@@ -334,6 +338,11 @@ namespace Assets.Scripts.Data
             characterToPlayer.Add(character, id);
             
         }
+
+		public GameObject GetPlayer(PlayerID id) {
+			Controller p = controllers.Find(x => x.ID.Equals(id));
+			return p.gameObject;
+		}
 
         public void RemovePlayer(Enums.Characters character)
         {
