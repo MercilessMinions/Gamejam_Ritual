@@ -153,25 +153,40 @@ public class XboxOneControllerWrapper : ControllerInputWrapper {
         return Input.GetButtonUp(buttonName);
     }
 
-    public override float GetTrigger(Triggers trigger, bool isRaw = false)
-    {
-        string axisName = "";
-        switch (trigger)
-        {
-            case Triggers.LeftTrigger:
-                axisName = getAxisName("9", "3", "5");
-                break;
-            case Triggers.RightTrigger:
-                axisName = getAxisName("10", "6", "6");
-                break;
-        }
-        if (isRaw)
-        {
-            return Input.GetAxisRaw(axisName);
-        }
-        else
-        {
-            return Input.GetAxis(axisName);
-        }
-    }
+	public override float GetTrigger(Triggers trigger, bool isRaw = false)
+	{
+		string axisName = "";
+		if(ControllerManager.instance.currentOS == ControllerManager.OperatingSystem.Win) {
+			axisName = getAxisName("3","","");
+			switch (trigger)
+			{
+			case Triggers.LeftTrigger:
+				if (isRaw) return Mathf.Abs(Mathf.Min(0,Input.GetAxisRaw(axisName)));
+				else return Mathf.Abs(Mathf.Min(0,Input.GetAxis(axisName)));
+				break;
+			case Triggers.RightTrigger:
+				if (isRaw) return Mathf.Max(0,Input.GetAxisRaw(axisName));
+				else return Mathf.Max(0,Input.GetAxis(axisName));
+				break;
+			}
+		} else {
+			switch (trigger)
+			{
+			case Triggers.LeftTrigger:
+				axisName = getAxisName("9", "3", "5");
+				break;
+			case Triggers.RightTrigger:
+				axisName = getAxisName("10", "6", "6");
+				break;
+			}
+			if (isRaw)
+			{
+				return Input.GetAxisRaw(axisName);
+			}
+			else
+			{
+				return Input.GetAxis(axisName);
+			}
+		}
+	}
 }
