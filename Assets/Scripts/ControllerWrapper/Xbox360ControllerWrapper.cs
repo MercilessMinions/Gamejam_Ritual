@@ -162,11 +162,9 @@ public class Xbox360ControllerWrapper : ControllerInputWrapper {
                 case Triggers.LeftTrigger:
                     if (isRaw) return Mathf.Max(0, Input.GetAxisRaw(axisName));
                     else return Mathf.Max(0, Input.GetAxis(axisName));
-                    break;
                 case Triggers.RightTrigger:
                     if (isRaw) return Mathf.Abs(Mathf.Min(0, Input.GetAxisRaw(axisName)));
                     else return Mathf.Abs(Mathf.Min(0, Input.GetAxis(axisName)));
-                    break;
             }
         } else {
 	        switch (trigger)

@@ -27,11 +27,4 @@ public class InputTester : MonoBehaviour {
 			cm.ClearPlayers();
 		}
 	}
-
-    void Update()
-    {
-        //Debug.Log("J1A3: " + Input.GetAxis("j1_Axis3"));
-        //Debug.Log("J2A3: " + Input.GetAxis("j2_Axis3"));
-        //Debug.Log("===============");
-    }
 }
