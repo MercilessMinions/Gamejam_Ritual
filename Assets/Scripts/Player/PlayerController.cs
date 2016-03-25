@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Level;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Player
 {
@@ -9,12 +10,24 @@ namespace Assets.Scripts.Player
     /// </summary>
     public class PlayerController : Controller
     {
+		private const float MAX_HOLD_TIME = 3f;
+
         private bool pickedUpThisTurn;
 		private float walkSoundTimer;
+		private float holdTimer;
+
+		[SerializeField]
+		private Transform selectorUI;
+
+		[SerializeField]
+		private Canvas holdingUI;
 
 		protected override void Update()
         {
             base.Update();
+
+			if(playerColor == Color.clear) playerColor = holdingUI.transform.GetChild(1).GetComponent<Image>().color;
+
 			if (fallingOffEdge) {
 				if(transform.localScale.x <= 0) {
 					life.Deactivate();
@@ -36,6 +49,11 @@ namespace Assets.Scripts.Player
             {
 				float hor = ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, this.id);
 				float vert = ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, this.id);
+
+				if (heldObject != null && heldObject.GetComponent<PlayerController>()) {
+					hor += 0.5f*ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, heldObject.GetComponent<PlayerController>().id);
+					vert += 0.5f*ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, heldObject.GetComponent<PlayerController>().id);
+				}
 
                 if (hor > ControllerManager.CUSTOM_DEADZONE)
                 {
@@ -103,7 +121,9 @@ namespace Assets.Scripts.Player
                     if (pickedUpThisTurn)
                         pickedUpThisTurn = false;
                     else
+					{
                         ThrowObject();
+					}
                 }
 
 				if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, id))
@@ -115,6 +135,28 @@ namespace Assets.Scripts.Player
                 {
                     anim.SetBool("Attack", false);
                 }
+
+				if (holdCooldown >= 0)
+				{
+					holdingUI.transform.GetChild(1).GetComponent<Image>().fillAmount = (1-holdCooldown)*0.8f + 0.1f;
+					if (holdingUI.transform.GetChild(1).GetComponent<Image>().color != Color.white)
+						holdingUI.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+					holdCooldown -= Time.deltaTime;
+				}
+				else if(heldObject && holdTimer > 0)
+				{
+					holdTimer -= Time.deltaTime;
+					holdingUI.transform.GetChild(1).GetComponent<Image>().fillAmount = (holdTimer/MAX_HOLD_TIME)*0.8f + 0.1f;
+					if (holdingUI.transform.GetChild(1).GetComponent<Image>().color != playerColor)
+						holdingUI.transform.GetChild(1).GetComponent<Image>().color = playerColor;
+					if(holdTimer <= 0) {
+						ThrowObject();
+					}
+				} else {
+					if (holdingUI.transform.GetChild(1).GetComponent<Image>().color != playerColor)
+						holdingUI.transform.GetChild(1).GetComponent<Image>().color = playerColor;
+					holdingUI.transform.GetChild(1).GetComponent<Image>().fillAmount = 1;
+				}
             }
         }
 
@@ -135,13 +177,19 @@ namespace Assets.Scripts.Player
         void OnTriggerStay2D(Collider2D col)
         {
             if (heldObject || movement.Rolling || !active) return;
+			if (holdCooldown > 0) return;
 			if (ControllerManager.instance.GetButtonDown(ControllerInputWrapper.Buttons.A, id)) return;
-			if (ControllerManager.instance.GetTrigger(ControllerInputWrapper.Triggers.RightTrigger,this.id) > 0 && !Data.GameManager.instance.paused)
-            {
-                heldObject = col.transform.root.GetComponent<SpriteObject>();
-                if (heldObject)
-                {
-					if(heldObject.GetComponent<PlayerController>()) {
+			SpriteObject tempObj = col.transform.root.GetComponent<SpriteObject>();
+			if(tempObj)
+			{
+//				selectorUI.position = tempObj.transform.position;
+//				selectorUI.GetComponent<SpriteRenderer>().enabled = true;
+				if (ControllerManager.instance.GetTrigger(ControllerInputWrapper.Triggers.RightTrigger,this.id) > 0 && !Data.GameManager.instance.paused)
+            	{
+					heldObject = tempObj;
+					holdTimer = MAX_HOLD_TIME;
+					if(heldObject.GetComponent<PlayerController>()) 
+					{
                     	heldObject.GetComponentInChildren<Animator>().SetBool("Picked Up", true);
 					}
                     pickedUpThisTurn = true;
@@ -149,9 +197,17 @@ namespace Assets.Scripts.Player
                     heldObject.Falling = false;
                     heldObject.transform.parent = transform;
                     heldObject.Sprite.position = holdPoint.position;
-                }
-            }
+				}
+			}
+			else
+			{
+//				selectorUI.GetComponent<SpriteRenderer>().enabled = false;
+			}
         }
+
+		void OnTriggerExit2D(Collider2D col) {
+//			selectorUI.GetComponent<SpriteRenderer>().enabled = false;
+		}
 
         public SpriteObject HeldObject
         {

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using Assets.Scripts.Level;
 using System;
@@ -27,7 +28,11 @@ namespace Assets.Scripts.Player
 
 		public SpriteObject heldObject;
 
+		protected float holdCooldown;
+
         protected Animator anim;
+
+		protected Color playerColor;
 
         void Awake()
         {
@@ -78,6 +83,7 @@ namespace Assets.Scripts.Player
                 heldObject.transform.parent = null;
                 heldObject = null;
                 anim.SetBool("Carry", false);
+				holdCooldown = 1f;
             }
         }
 
