@@ -50,6 +50,8 @@ namespace Assets.Scripts.Player
 			base.Update();
 			if(life.IsInvincible) {
 				base.sprite.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.5f);
+			} else if(life.IsHit) {
+				base.sprite.GetComponent<SpriteRenderer>().color = new Color(1,0,0,1);
 			} else {
 				base.sprite.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
 			}

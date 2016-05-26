@@ -45,7 +45,7 @@ namespace Assets.Scripts.Player
                 heldObject.UpdateSortingLayer();
                 anim.SetBool("Carry", true);
             }
-            if (Active && !Data.GameManager.instance.paused)
+			if (Active && Data.GameManager.instance.DeltaTime > 0)
             {
 				float hor = ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, this.id);
 				float vert = ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, this.id);

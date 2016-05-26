@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Data;
 
 namespace Assets.Scripts.Util
 {
@@ -29,6 +30,11 @@ namespace Assets.Scripts.Util
         {
             anim = GetComponent<Animator>();
         }
+
+		void Update()
+		{
+			anim.speed = GameManager.instance.DeltaTime/Time.deltaTime;
+		}
 		
         /// <summary>
         /// Pausing the anumator

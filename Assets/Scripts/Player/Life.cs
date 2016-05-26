@@ -23,6 +23,8 @@ namespace Assets.Scripts.Player
         [SerializeField]
         private GameObject hitEffect;
 
+		private float hitTintTimer;
+
         /// <summary>
         /// Modifies a player's heath
         /// </summary>
@@ -31,7 +33,7 @@ namespace Assets.Scripts.Player
         {
             health = Mathf.Clamp((health + delta), 0, MAX_HEALTH);
             if (health <= 0) Die();
-
+			hitTintTimer = 0.1f;
             if (effects) Instantiate(hitEffect, transform.position + Vector3.up, Quaternion.identity);
         }
 
@@ -54,6 +56,12 @@ namespace Assets.Scripts.Player
 		public bool IsInvincible {
 			get {
 				return respawnInvincibility > 0;
+			}
+		}
+
+		public bool IsHit {
+			get {
+				return hitTintTimer > 0;
 			}
 		}
 
@@ -80,6 +88,9 @@ namespace Assets.Scripts.Player
 		void Update() {
 			if(respawnInvincibility > 0) {
 				respawnInvincibility -= Data.GameManager.instance.DeltaTime;
+			}
+			if(hitTintTimer > 0) {
+				hitTintTimer -= Data.GameManager.instance.DeltaTime;
 			}
 			if(healthTransform.activeSelf) {
 				healthTransform.transform.GetChild(0).localScale = new Vector3((health/MAX_HEALTH),1,1);

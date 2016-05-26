@@ -27,7 +27,7 @@ namespace Assets.Scripts.Player
                 if (rolling)
                 {
                     rollTimer += Data.GameManager.instance.DeltaTime;
-                    rollSlerp = Mathf.SmoothDamp(rollSlerp, targetSlerp, ref rollVel, slerpSpeed);
+					rollSlerp = Mathf.SmoothDamp(rollSlerp, targetSlerp, ref rollVel, slerpSpeed, 10000, Data.GameManager.instance.DeltaTime);
                     if (rollTimer >= rollTime)
                     {
                         Reset();
@@ -102,7 +102,7 @@ namespace Assets.Scripts.Player
         private void Roll(int dir)
         {
             transform.Translate(dir * Vector3.right * rollSlerp * Data.GameManager.instance.DeltaTime, Space.World);
-            if(!Data.GameManager.instance.paused) currentZRotation = Mathf.SmoothDamp(currentZRotation, targetZRotation, ref rotationVel, rotationSpeed);
+			if(!Data.GameManager.instance.paused) currentZRotation = Mathf.SmoothDamp(currentZRotation, targetZRotation, ref rotationVel, rotationSpeed, 10000, Data.GameManager.instance.DeltaTime);
             controller.Sprite.transform.rotation = Quaternion.Euler(0, 0, currentZRotation);
         }
 

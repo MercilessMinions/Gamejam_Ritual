@@ -175,6 +175,12 @@ namespace Assets.Scripts.Data
 
         void Update()
         {
+			if(sleepTimer > 0) {
+				sleepTimer -= Time.deltaTime;
+			}
+			if (paused || sleepTimer > 0) DeltaTime = 0;
+			else DeltaTime = Time.deltaTime;
+
             if (inGame)
             {
 
@@ -195,9 +201,6 @@ namespace Assets.Scripts.Data
 							UnPauseGame();
 						}
 					}
-
-					if (paused) DeltaTime = 0;
-					else DeltaTime = Time.deltaTime;
 
                 }
                 else
@@ -371,6 +374,11 @@ namespace Assets.Scripts.Data
                 gamesQueue[j] = m;
             }
         }
+
+		private float sleepTimer;
+		public void SleepGame(float secs) {
+			sleepTimer = secs;
+		}
 
 #region C# Properties
         public List<Controller> AllPlayers

@@ -27,6 +27,11 @@ namespace Assets.Scripts.Util
             system = GetComponent<ParticleSystem>();
         }
 
+		void Update()
+		{
+			system.playbackSpeed = Data.GameManager.instance.DeltaTime/Time.deltaTime;
+		}
+
         /// <summary>
         /// Pauses the particle system
         /// </summary>
